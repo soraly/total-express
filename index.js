@@ -47,7 +47,7 @@ server.use('/', (req, res, next) => {
     next()
 })
 
-//利用multer上传表单文件
+//利用multer上传表单的一个文件
 server.post('/upload', upload.single('wenjian'), (req, res, next) => {
     console.log(req.file, 'multer-files');
     if (req.file) {
