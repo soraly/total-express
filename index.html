@@ -1,19 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src='http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js'></script>
     <title>Document</title>
 </head>
+
 <body>
     <h2>total express</h2>
-    <form method="post" enctype="multipart/form-data"  action="http://localhost:6789/upload">
-        姓名： <input type="text" name='username'> <br>
-        密码： <input type="password" name='password'> <br>
+    <form method="post" enctype="multipart/form-data" action="http://localhost:6789/upload">
+        姓名：
+        <input type="text" name='username'>
+        <br> 密码：
+        <input type="password" name='password'>
+        <br>
         <input type="file" name='wenjian'>
-        <br><br>
+        <br>
+        <br>
         <button>提交</button>
     </form>
+    <button onclick="test()">测试</button>
+    <script>
+        var arr = [
+            {num:1,etag:'gjlsgjlsg'},
+            {num:2,etag:'fsfsffsfs'},
+            {num:3,etag:'qeqeqrwq'},
+            {num:4,etag:'fsafrjjgd'},
+            {num:5,etag:'gasggaga'},
+    ]
+        function getXml(arr,xml){
+            arr.forEach((item)=>{
+                var str = `<Part>
+                    <PartNumber>${item.num}</PartNumber>
+                    <ETag>${item.etag}</ETag>
+                </Part>`
+                xml +=str;
+            })
+            xml = `<CompleteMultipartUpload>
+                    ${xml}
+                 </CompleteMultipartUpload>`
+            return xml;
+        }
+        var xml = '';
+        xml = getXml(arr,xml)
+        function test() {
+            $.ajax({
+                url: 'http://localhost:6789/postoss',
+                type: 'post',
+                data: xml,
+                success(res) {
+                    console.log(res, 'res')
+                }
+            })
+        }
+
+    </script>
 </body>
+
 </html>
