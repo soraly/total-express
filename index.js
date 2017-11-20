@@ -61,7 +61,10 @@ server.post('/upload', upload.single('wenjian'), (req, res, next) => {
     console.log(req.body, 'multer-body');
     res.end('done')
 })
-
+//获取上传数据 
+server.use('/postoss',(req,res)=>{
+    res.end('postoss ~~~')
+})
 
 //设置静态文件解析目录
 server.use(express.static(__dirname + '/views'))
