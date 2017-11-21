@@ -9,14 +9,7 @@ const jade = require('jade')
 const multer = require('multer')
 const fs = require('fs')
 const path = require('path')
-
-//重命名文件
-//  fs.rename('./views/1.html','./views/2.html',(err)=>{
-//      if(err){console.log(err,'err')}else {
-//          console.log('rename done')
-//      }
-//  })
-
+const consolidate = require('consolidate')
 var server = express();
 var upload = multer({ dest: './www' })
 
@@ -38,19 +31,20 @@ server.use(cookieSession({
 server.use('/', (req, res, next) => {
     //get的请求数据===》req.query
     //post的请求数据===》req.body
-
     // req.on('data',(data)=>{
     //     console.log(data,'data')
     // })
     // res.write('<h2>hello,xiangl</h2>')
-    // res.end()
     next()
 })
 
-//利用multer上传表单文件single
+//利用multer上传表单文件
 server.post('/upload', upload.single('wenjian'), (req, res, next) => {
     console.log(req.file, 'multer-files');
+    res.cookie('name','xiang',{'maxAge': 24*3600*1000})
+    console.log(req.cookies, 'req.cookies')
     if (req.file) {
+        //如果上传了文件，解析并加上后缀名
         var ext = path.parse(req.file.originalname).ext;
         fs.rename(req.file.path, req.file.path + ext, (err) => {
             if (err) { console.log(err, 'err') } else {
@@ -58,12 +52,27 @@ server.post('/upload', upload.single('wenjian'), (req, res, next) => {
             }
         })
     }
+
     console.log(req.body, 'multer-body');
+    var data = {
+        name: req.body.username,
+        password: req.body.password,
+        phone: req.body.phone
+    }
+    res.render('hello.ejs',data);
     res.end('done')
 })
-//获取上传数据 
+
+//配置模板引擎
+//1.输出什么东西
+server.set('view engine','html');
+//2.模板文件放在哪儿
+server.set('views','./views');
+//使用哪种模板引擎
+server.engine('html', consolidate.ejs);
+
 server.use('/postoss',(req,res)=>{
-    res.end('postoss ~~~')
+    res.render('hello.ejs',{name: 'xiang'})
 })
 
 //设置静态文件解析目录
