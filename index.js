@@ -13,6 +13,14 @@ const consolidate = require('consolidate')
 var server = express();
 var upload = multer({ dest: './www' })
 
+const router = express.Router()
+router.get('/login',(req,res)=>{
+    res.render('login.ejs')
+})
+router.get('/register',(req,res)=>{
+    res.render('register.ejs')
+})
+server.use('/user',router)
 //设置签名，解析cookies
 server.use(cookieParser('abcd'))
 
