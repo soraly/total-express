@@ -1,0 +1,2225 @@
+#index {
+    background: white
+}
+
+#index.active {
+    background: #F9F9F9
+}
+
+.class-show-wrapper {
+    box-sizing: border-box;
+    background: white
+}
+
+.class-show-wrapper .clear {
+    overflow: hidden
+}
+
+.class-show-wrapper .clear span {
+    width: 55%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden
+}
+
+.class-show-wrapper .clear i {
+    width: 43%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden
+}
+
+.class-show-wrapper .header {
+    text-align: center
+}
+
+.class-show-wrapper .header .banner {
+    position: relative
+}
+
+.class-show-wrapper .header .widget-wrap {
+    bottom: 0;
+    width: 100%;
+    position: absolute;
+    height: 30px;
+    line-height: 30px;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white
+}
+
+.class-show-wrapper .nav {
+    overflow: hidden
+}
+
+.class-show-wrapper .nav .nav-item {
+    float: left;
+    width: 25%;
+    cursor: pointer;
+    box-sizing: border-box
+}
+
+.class-show-wrapper .nav .nav-item a {
+    display: block;
+    padding: 10px 0;
+    color: #333
+}
+
+.class-show-wrapper .nav .nav-item a i.wrap-icon {
+    color: white;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    line-height: 51px;
+    display: block;
+    margin: 5px auto
+}
+
+.class-show-wrapper .nav .nav-item span {
+    display: block;
+    text-align: center
+}
+
+.class-show-wrapper .nav .nav-item span.nav-icon {
+    font-size: 34px
+}
+
+.class-show-wrapper .nav .nav-item.active a > i {
+    background: #4ac8db
+}
+
+.class-show-wrapper .nav .nav-item.active a > i > span {
+    color: white
+}
+
+.class-show-wrapper .nav .nav-item.schoolnews a .wrap-icon {
+    background: #D0B89E
+}
+
+.class-show-wrapper .nav .nav-item.classnews a .wrap-icon {
+    background: #4AC8D6
+}
+
+.class-show-wrapper .nav .nav-item.classcircle a .wrap-icon {
+    background: #FBC4AA
+}
+
+.class-show-wrapper .nav .nav-item.classStar a .wrap-icon {
+    background: #90BFEa
+}
+
+.class-show-wrapper .nav .nav-item.classPhoto a .wrap-icon {
+    background: #A1D6A2
+}
+
+.class-show-wrapper .nav .nav-item.recipes a .wrap-icon {
+    background: #FFCC85
+}
+
+.class-show-wrapper .nav .nav-item.homework a .wrap-icon {
+    background: #4EB4E4
+}
+
+.class-show-wrapper .nav .nav-item.classWork a .wrap-icon {
+    background: #F3CDE5
+}
+
+.class-show-wrapper .block {
+    height: 12px;
+    background: #F9F9F9;
+    box-shadow: 0px 2px 3px #F1F1F1 inset
+}
+
+.class-show-wrapper .class-options {
+    display: none
+}
+
+.class-show-wrapper .class-options .weui_dialog {
+    width: 70%;
+    overflow: auto
+}
+
+.class-show-wrapper .class-options .weui_dialog.fixed {
+    max-height: 480px
+}
+
+.class-show-wrapper .class-options .weui_dialog ul li {
+    padding: 15px 15px 0 15px;
+    overflow: hidden;
+    border-bottom: 1px solid #f9f9f9
+}
+
+.class-show-wrapper .class-options .weui_dialog ul li span {
+    float: left
+}
+
+.class-show-wrapper .class-options .weui_dialog ul li i {
+    float: right;
+    color: #4CC9D7;
+    font-size: 18px;
+    opacity: 0
+}
+
+.class-show-wrapper .class-options .weui_dialog ul li i.active {
+    opacity: 1
+}
+
+.class-show-wrapper .class-options .weui_dialog ul li:last-child {
+    padding-bottom: 15px
+}
+
+@media screen and (max-height: 500px) {
+    .class-show-wrapper .class-options .weui_dialog.fixed {
+        max-height: 370px
+    }
+}
+
+.class-show-wrapper .change-class {
+    width: 55px;
+    height: 55px;
+    padding: 10px;
+    color: white;
+    background: rgba(3, 3, 3, 0.5);
+    text-align: center;
+    line-height: 18px;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 20px;
+    right: 10px
+}
+
+.class-show-wrapper .class-new-item a {
+    position: relative
+}
+
+.class-show-wrapper .class-new-item .red-dot {
+    z-index: 0
+}
+
+.class-show-wrapper .nav-icon-info {
+    background: url("/assets/img/class/nav-icon.png") no-repeat 0 0
+}
+
+.class-show-wrapper .nav-icon-album {
+    background: url("/assets/img/class/nav-icon.png") no-repeat -46px 0
+}
+
+.class-show-wrapper .nav-icon-work {
+    background: url("/assets/img/class/nav-icon.png") no-repeat -92px 0
+}
+
+.class-show-wrapper .nav-icon-star {
+    background: url("/assets/img/class/nav-icon.png") no-repeat -138px 0
+}
+
+.class-show-wrapper .class-action .title-container, .class-show-wrapper .class-photo .title-container {
+    margin: 10px 15px 0 15px;
+    font-size: 16px;
+    overflow: hidden
+}
+
+.class-show-wrapper .class-action .title-container div, .class-show-wrapper .class-photo .title-container div {
+    float: left
+}
+
+.class-show-wrapper .class-action .title-container .title-border, .class-show-wrapper .class-photo .title-container .title-border {
+    height: 16px;
+    border-left: 3px solid #FE9601;
+    margin: 3px 5px 0 0
+}
+
+.class-show-wrapper .class-action .title-container .action-title, .class-show-wrapper .class-photo .title-container .action-title {
+    font-size: 18px;
+    line-height: 22px
+}
+
+.class-show-wrapper .class-action ul li, .class-show-wrapper .class-photo ul li {
+    padding: 0 15px 0 15px
+}
+
+.class-show-wrapper .class-action ul li .class-new-item, .class-show-wrapper .class-photo ul li .class-new-item {
+    padding-top: 10px;
+    margin-bottom: 10px;
+    overflow: hidden
+}
+
+.class-show-wrapper .class-action ul li .class-new-item a, .class-show-wrapper .class-photo ul li .class-new-item a {
+    display: block
+}
+
+.class-show-wrapper .class-action ul li .action-cover, .class-show-wrapper .class-photo ul li .action-cover {
+    float: left;
+    width: 60px;
+    height: 60px
+}
+
+.class-show-wrapper .class-action ul li .item-txt, .class-show-wrapper .class-photo ul li .item-txt {
+    margin-left: 73px
+}
+
+.class-show-wrapper .class-action ul li .item-txt p, .class-show-wrapper .class-photo ul li .item-txt p {
+    color: #999
+}
+
+.class-show-wrapper .class-action ul li .item-txt div, .class-show-wrapper .class-photo ul li .item-txt div {
+    margin-bottom: 5px
+}
+
+.class-show-wrapper .class-action ul li .item-txt div span, .class-show-wrapper .class-photo ul li .item-txt div span {
+    float: left;
+    font-size: 16px
+}
+
+.class-show-wrapper .class-action ul li .item-txt div i, .class-show-wrapper .class-photo ul li .item-txt div i {
+    text-align: right;
+    padding-right: 5px;
+    float: right;
+    color: #999
+}
+
+.class-show-wrapper .class-action ul li hr, .class-show-wrapper .class-photo ul li hr {
+    border: none;
+    height: 1px;
+    background-color: #eee
+}
+
+.class-show-wrapper .class-action ul li:last-child hr, .class-show-wrapper .class-photo ul li:last-child hr {
+    display: none
+}
+
+.class-show-wrapper .class-photo ul {
+    margin-top: 10px
+}
+
+.class-show-wrapper .class-photo ul li {
+    padding: 0;
+    margin-left: 15px
+}
+
+.class-show-wrapper .class-photo .title-container .title-border {
+    border-color: #fd929c
+}
+
+.class-show-wrapper .class-photo .photo-title {
+    border-left: 2px solid #FE9601;
+    padding-left: 5px;
+    margin-bottom: 10px
+}
+
+.class-show-wrapper .class-photo .photo-item {
+    float: left;
+    width: calc((100% - 75px) / 4);
+    text-align: center
+}
+
+.class-show-wrapper .class-photo .photo-item img {
+    width: 100%;
+    vertical-align: top;
+    height: 60px
+}
+
+.class-show-wrapper .class-photo .photo-item div {
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+    box-shadow: 1px 1px 2px #ddd
+}
+
+.class-show-wrapper .class-info-box {
+    padding: 15px;
+    color: #6b6b6b
+}
+
+.class-show-wrapper .class-teacher-list {
+    border-top: 1px solid #ddd;
+    padding: 15px 0
+}
+
+.class-show-wrapper .class-teacher-item {
+    padding: 7px 15px
+}
+
+.class-show-wrapper .class-teacher-avatar {
+    width: 60px;
+    height: 60px;
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 100px;
+    background-color: #aeaeae;
+    margin-right: 12px
+}
+
+.class-show-wrapper .class-teacher-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 100px
+}
+
+.class-show-wrapper .class-teacher-info {
+    display: inline-block;
+    vertical-align: middle
+}
+
+.view-module-classAction .class-action-list {
+    background: #fff
+}
+
+.view-module-classAction .class-action-list a:hover {
+    text-decoration: none
+}
+
+.view-module-classAction .class-action-list > dl {
+    margin: 0;
+    background-color: #fff
+}
+
+.view-module-classAction .class-action-list > dl > dt {
+    padding: 10px 15px;
+    overflow: hidden;
+    border-bottom: 1px solid #eaeaea
+}
+
+.view-module-classAction .class-action-list > dl > dt > h4 {
+    float: left;
+    border-left: 3px solid #4AC8D6;
+    padding-left: 10px;
+    font-size: 18px;
+    font-weight: 400
+}
+
+.view-module-classAction .class-action-list > dl > dt > a {
+    float: right;
+    display: block;
+    color: #666;
+    font-weight: 500;
+    margin-top: 2px
+}
+
+.view-module-classAction .class-action-list > dl > dd {
+    overflow: hidden;
+    border-bottom: 1px solid #eaeaea;
+    position: relative;
+    padding: 10px
+}
+
+.view-module-classAction .class-action-list > dl > dd i.red-dot {
+    left: 84px;
+    top: 4px
+}
+
+.view-module-classAction .class-action-list > dl > dd:last-child {
+    background-image: none
+}
+
+.view-module-classAction .class-action-list > dl > dd .class-new-item {
+    padding-left: 90px
+}
+
+.view-module-classAction .class-action-list > dl > dd .class-new-item a {
+    min-height: 70px;
+    text-decoration: none;
+    color: #333;
+    display: block;
+    position: relative
+}
+
+.view-module-classAction .class-action-list > dl > dd .class-new-item a span.img {
+    float: left;
+    width: 80px;
+    height: 80px;
+    margin-left: -90px;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-position: center center
+}
+
+.view-module-classAction .class-action-list > dl > dd .class-new-item a > .item-txt div {
+    overflow: auto
+}
+
+.view-module-classAction .class-action-list > dl > dd .class-new-item a > .item-txt span {
+    color: #333;
+    float: left;
+    width: 65%;
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 16px;
+    margin-bottom: 10px
+}
+
+.view-module-classAction .class-action-list > dl > dd .class-new-item a > .item-txt b {
+    width: 35%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-weight: 500;
+    color: #999;
+    float: right;
+    font-size: 13px;
+    line-height: 28px;
+    text-align: right
+}
+
+.view-module-classAction .class-action-list > dl > dd .class-new-item a > .item-txt p {
+    color: #888;
+    font-size: 13px;
+    margin-bottom: 0
+}
+
+.view-module-classAction .class-action-list > dl > dd .class-noMore-item {
+    text-align: center;
+    color: #999
+}
+
+.view-module-classAction .class-action-list > dl > dd .class-noMore-item P {
+    margin-bottom: 0;
+    color: #333
+}
+
+.new-publish {
+    bottom: 0;
+    left: 0;
+    padding: 0;
+    position: fixed;
+    right: 0;
+    top: auto;
+    z-index: 200
+}
+
+.new-publish .btn {
+    background-color: #4AC8D6;
+    color: #fff;
+    border-radius: 0;
+    padding: 11px;
+    font-size: 16px;
+    width: 100%;
+    display: block;
+    text-align: center;
+    line-height: 22px
+}
+
+.new-publish .btn i {
+    font-size: 18px
+}
+
+.view-module-classActionDetail {
+    background: white;
+    padding-bottom: 40px
+}
+
+.view-module-classActionDetail > .detail {
+    margin-bottom: 78px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+    background-color: #fff
+}
+
+.view-module-classActionDetail > .detail .detail-title {
+    width: 100%;
+    display: table;
+    padding: 10px 15px 3px 15px;
+    border-bottom: solid 1px #ccc;
+    background-color: #efefef;
+    text-align: center
+}
+
+.view-module-classActionDetail > .detail .detail-title h4 {
+    text-align: center;
+    margin-bottom: 6px;
+    font-size: 18px;
+    font-weight: 500
+}
+
+.view-module-classActionDetail > .detail .detail-title p, .view-module-classActionDetail > .detail .detail-title span {
+    color: #888
+}
+
+.view-module-classActionDetail > .detail .detail-title .read {
+    float: right
+}
+
+.view-module-classActionDetail > .detail .detail-title a.del {
+    margin-left: 10px;
+    padding-top: 3px
+}
+
+.view-module-classActionDetail > .detail .detail-title > div.article-publish {
+    width: 100%;
+    margin: 0
+}
+
+.view-module-classActionDetail > .detail .detail-title > div.article-publish div {
+    width: 70%;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis
+}
+
+.view-module-classActionDetail > .detail .detail-title > div.article-publish span {
+    font-size: 14px;
+    color: #999;
+    margin-left: 5px
+}
+
+.view-module-classActionDetail > .detail .detail-title > div.article-publish span.read {
+    float: right;
+    margin-top: -2px
+}
+
+@media screen and (max-width: 320px) {
+    .view-module-classActionDetail > .detail .detail-title > div.article-publish span {
+        font-size: 13px
+    }
+}
+
+.view-module-classActionDetail > .detail .detail-title > div.article-publish > a {
+    display: block;
+    float: right;
+    color: #666;
+    margin: 5px 0 0 5px
+}
+
+.view-module-classActionDetail > .detail .detail-title > div.article-publish > a:hover, .view-module-classActionDetail > .detail .detail-title > div.article-publish > a:link {
+    text-decoration: none
+}
+
+.view-module-classActionDetail > .detail * {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    -webkit-box-sizing: border-box !important;
+    word-wrap: break-word !important
+}
+
+.view-module-classActionDetail > .detail img {
+    display: block;
+    margin-bottom: 10px
+}
+
+.view-module-classActionDetail > .detail iframe {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px
+}
+
+.view-module-classActionDetail > .detail > .article-content {
+    font-size: 16px;
+    padding: 15px;
+    position: relative;
+    overflow: hidden;
+    max-width: 100%
+}
+
+.view-module-classActionDetail > .detail > .article-content * {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    -webkit-box-sizing: border-box !important;
+    word-wrap: break-word !important
+}
+
+.view-module-classActionDetail > .detail > .article-content embed, .view-module-classActionDetail > .detail > .article-content iframe {
+    max-width: 100%;
+    margin-top: 15px
+}
+
+.view-module-classActionDetail > .detail > .article-content img {
+    max-width: 100%;
+    display: block;
+    margin: 10px auto 0.4em
+}
+
+.view-module-classActionDetail > .detail > .article-content table {
+    width: 100% !important
+}
+
+.view-module-classActionDetail > .detail > .article-content td, .view-module-classActionDetail > .detail > .article-content th {
+    border: 1px solid #000
+}
+
+.view-module-classActionDetail > .detail > .article-content table.noBorderTable td {
+    border: 1px solid #000 !important
+}
+
+.view-module-classActionDetail > .detail .praise {
+    overflow: hidden
+}
+
+.view-module-classActionDetail > .detail .loading .class-noMore-item {
+    text-align: center
+}
+
+.view-module-classActionDetail > .detail .loading .class-noMore-item img {
+    display: inline-block;
+    vertical-align: middle
+}
+
+.view-module-classActionDetail > .detail .loading .class-noMore-item p {
+    display: inline-block;
+    vertical-align: top
+}
+
+.view-module-classActionDetail .new-publish {
+    margin: 10px;
+    position: static
+}
+
+.view-module-addAction, .view-module-addStar, .view-module-addWork {
+    box-sizing: border-box
+}
+
+.view-module-addAction .publish .publish-header, .view-module-addStar .publish .publish-header, .view-module-addWork .publish .publish-header {
+    background: white;
+    border-bottom: 1px solid #e3e3e3;
+    height: 50px;
+    line-height: 30px;
+    padding: 10px 10px 10px 15px
+}
+
+.view-module-addAction .publish .publish-header .icon-roundaddfill, .view-module-addStar .publish .publish-header .icon-roundaddfill, .view-module-addWork .publish .publish-header .icon-roundaddfill {
+    float: right;
+    font-size: 22px;
+    padding: 0px 5px 5px 5px;
+    color: #4AC8D6
+}
+
+.view-module-addAction .publish .publish-main, .view-module-addStar .publish .publish-main, .view-module-addWork .publish .publish-main {
+    background: white;
+    border-top: 1px solid #e3e3e3
+}
+
+.view-module-addAction .publish .publish-title, .view-module-addStar .publish .publish-title, .view-module-addWork .publish .publish-title {
+    border-bottom: 1px solid #e3e3e3
+}
+
+.view-module-addAction .publish .publish-title input, .view-module-addStar .publish .publish-title input, .view-module-addWork .publish .publish-title input {
+    width: 100%;
+    height: 50px;
+    padding: 10px 25px 10px 15px
+}
+
+.view-module-addAction .publish textarea, .view-module-addStar .publish textarea, .view-module-addWork .publish textarea {
+    border: none;
+    width: 100%;
+    padding: 20px 15px 10px 15px
+}
+
+.view-module-addAction .publish .choose-class, .view-module-addStar .publish .choose-class, .view-module-addWork .publish .choose-class {
+    margin-bottom: 45px
+}
+
+.view-module-addAction .publish .classList, .view-module-addStar .publish .classList, .view-module-addWork .publish .classList {
+    border-bottom: solid 1px #eee;
+    padding: 10px 15px;
+    line-height: 22px;
+    font-size: 14px;
+    cursor: pointer;
+    background: white
+}
+
+.view-module-addAction .publish .classList i, .view-module-addStar .publish .classList i, .view-module-addWork .publish .classList i {
+    float: right;
+    width: 16px;
+    height: 16px;
+    color: #4AC8D6;
+    font-size: 20px
+}
+
+.view-module-addAction .publish .classList i.active, .view-module-addStar .publish .classList i.active, .view-module-addWork .publish .classList i.active {
+    border: none;
+    margin-top: 0
+}
+
+.view-module-classStar {
+    box-sizing: border-box
+}
+
+.view-module-classStar .class-star-list .class-star-item {
+    padding: 15px 10px 10px 15px;
+    display: block;
+    border-bottom: 1px solid #EDEDED;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 7px;
+    background: white
+}
+
+.view-module-classStar .class-star-list .class-star-item img {
+    float: left;
+    width: 72px;
+    height: 72px;
+    border: 1px solid transparent;
+    border-radius: 50%
+}
+
+.view-module-classStar .class-star-list .class-star-item .item-txt {
+    margin-left: 79px
+}
+
+.view-module-classStar .class-star-list .class-star-item .item-txt h3 {
+    font-size: 16px;
+    margin-bottom: 2px
+}
+
+.view-module-classStar .class-star-list .class-star-item .item-txt p {
+    font-size: 13px
+}
+
+.view-module-classStar .class-star-list .class-star-item .item-txt > span {
+    position: absolute;
+    right: 20px
+}
+
+.view-module-classStar .class-star-list .class-star-item .item-txt > div {
+    float: left
+}
+
+.view-module-classStar .class-star-list .class-star-item a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    position: relative
+}
+
+.view-module-classStar .class-star-list .class-star-item a span.img {
+    float: left;
+    width: 80px;
+    height: 80px;
+    margin-left: -90px;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-position: center center
+}
+
+.view-module-classStar .class-star-list .class-star-item a .red-dot {
+    left: 64px;
+    top: 2px
+}
+
+.view-module-classStar .class-star-list .class-star-item a > .item-txt div {
+    overflow: auto
+}
+
+.view-module-classStar .class-star-list .class-star-item a > .item-txt span {
+    color: #333;
+    float: left;
+    width: 65%;
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 16px;
+    margin-bottom: 10px
+}
+
+.view-module-classStar .class-star-list .class-star-item a > .item-txt b {
+    width: 35%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-weight: 500;
+    color: #999;
+    text-align: right;
+    float: right;
+    font-size: 13px;
+    line-height: 28px
+}
+
+.view-module-classStar .class-star-list .class-star-item a > .item-txt p {
+    color: #888;
+    font-size: 13px;
+    margin-bottom: 0
+}
+
+.view-module-classStarDetail {
+    padding-bottom: 40px;
+    background: white
+}
+
+.view-module-classStarDetail .photo-header {
+    padding: 25px 15px 10px 15px;
+    text-align: center;
+    min-height: 200px;
+    background: white;
+    border-bottom: 1px solid #EEEEEE
+}
+
+.view-module-classStarDetail .photo-header .avatar {
+    border-radius: 50%;
+    margin: 0 auto 8px auto;
+    background-size: 100% 100%;
+    min-height: 100px
+}
+
+.view-module-classStarDetail .photo-header .star-name {
+    margin-bottom: 12px
+}
+
+.view-module-classStarDetail .photo-header .star-name span {
+    font-size: 20px
+}
+
+.view-module-classStarDetail .photo-header p {
+    color: #999;
+    font-size: 13px;
+    overflow: hidden
+}
+
+.view-module-classStarDetail .photo-header p span {
+    float: left
+}
+
+.view-module-classStarDetail .photo-header p i {
+    float: right
+}
+
+.view-module-classStarDetail .content {
+    background: white;
+    overflow: hidden;
+    padding: 15px 15px 10px 15px
+}
+
+.view-module-classStarDetail .content .star-comment {
+    margin-top: 20px;
+    overflow: hidden;
+    color: #909090
+}
+
+.view-module-classStarDetail .content .star-comment i {
+    font-size: 24px
+}
+
+.view-module-classStarDetail .content .star-comment .view {
+    float: left
+}
+
+.view-module-classStarDetail .content .star-comment .star-praise-comment {
+    color: #909090;
+    float: right
+}
+
+.view-module-classStarDetail .content .star-comment .star-praise-comment span:last-child {
+    margin-left: 20px
+}
+
+.view-module-classStarDetail .reason-content a {
+    max-width: 100%
+}
+
+.view-module-classStarDetail .reason-content img {
+    margin: 10px auto 0.4em;
+    display: block;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    -webkit-box-sizing: border-box !important;
+    word-wrap: break-word !important
+}
+
+.view-module-classStarDetail .icon-delete {
+    float: right;
+    margin-left: 8px
+}
+
+.view-module-addStar {
+    background: #F9F9F9
+}
+
+.view-module-addStar .publish .classList i {
+    border: none
+}
+
+.view-module-studentWork {
+    box-sizing: border-box
+}
+
+.view-module-studentWork .class-work-list dd {
+    padding: 10px;
+    overflow: hidden;
+    border-bottom: 1px solid #EEEEEE;
+    position: relative
+}
+
+.view-module-studentWork .class-work-list dd i.red-dot {
+    left: 84px;
+    top: 4px
+}
+
+.view-module-studentWork .class-work-list a {
+    overflow: hidden
+}
+
+.view-module-studentWork .class-work-list img {
+    width: 80px;
+    height: 80px;
+    float: left
+}
+
+.view-module-studentWork .class-work-list .title-author {
+    margin: 0 0 0 90px
+}
+
+.view-module-studentWork .class-work-list .title-author > div {
+    overflow: hidden
+}
+
+.view-module-studentWork .class-work-list .title-author > div h3 {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 58%;
+    float: left;
+    font-size: 16px
+}
+
+.view-module-studentWork .class-work-list .title-author > div span {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 40%;
+    color: #999;
+    float: right
+}
+
+.view-module-studentWork .class-work-list .title-author > p {
+    margin-top: 5px;
+    color: #999;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden
+}
+
+.view-module-studentWorkDetail {
+    background: white;
+    padding-bottom: 40px;
+    box-sizing: border-box
+}
+
+.view-module-studentWorkDetail .detail-title {
+    background: #efefef;
+    border-bottom: solid 1px #ccc;
+    padding: 10px 15px 3px 15px
+}
+
+.view-module-studentWorkDetail .detail-title h2 {
+    text-align: center
+}
+
+.view-module-studentWorkDetail .detail-title > img {
+    width: 40px;
+    height: 40px;
+    float: left;
+    border-radius: 50%
+}
+
+.view-module-studentWorkDetail .detail-title .title-container {
+    overflow: hidden;
+    text-align: center
+}
+
+.view-module-studentWorkDetail .detail-title .title-container div {
+    width: 70%;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis
+}
+
+.view-module-studentWorkDetail .detail-title .title-container span {
+    margin-left: 5px;
+    color: #999
+}
+
+.view-module-studentWorkDetail .detail-title .title-container span.read {
+    float: right;
+    margin-top: -2px
+}
+
+@media screen and (max-width: 320px) {
+    .view-module-studentWorkDetail .detail-title .title-container span {
+        font-size: 13px
+    }
+}
+
+.view-module-studentWorkDetail .detail-title h2 {
+    font-size: 18px;
+    font-family: '微软雅黑';
+    margin-bottom: 6px
+}
+
+.view-module-studentWorkDetail .detail-title .detail-content img {
+    max-width: 100%;
+    margin-bottom: 5px
+}
+
+.view-module-studentWorkDetail .weui_dialog_alert .weui_dialog_bd {
+    padding: 20px 20px 10px 20px
+}
+
+.view-module-studentWorkDetail .article-content {
+    font-size: 16px;
+    padding: 15px;
+    position: relative;
+    overflow: hidden;
+    max-width: 100%
+}
+
+.view-module-studentWorkDetail .article-content * {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    -webkit-box-sizing: border-box !important;
+    word-wrap: break-word !important
+}
+
+.view-module-studentWorkDetail .article-content img {
+    max-width: 100%;
+    display: block;
+    margin: 10px auto 0.4em
+}
+
+.view-module-studentWorkDetail .article-content table {
+    width: 100% !important
+}
+
+.view-module-studentWorkDetail .article-content td, .view-module-studentWorkDetail .article-content th {
+    border: 1px solid #000
+}
+
+.view-module-studentWorkDetail .article-content table.noBorderTable td {
+    border: 1px solid #000 !important
+}
+
+.view-module-classPhoto {
+    box-sizing: border-box
+}
+
+.view-module-classPhoto .photo-list {
+    padding: 10px 0
+}
+
+.view-module-classPhoto .photo-list .photo-item {
+    text-align: left;
+    background: white;
+    vertical-align: top;
+    letter-spacing: normal;
+    font-size: 14px;
+    display: inline-block;
+    position: relative;
+    margin: 0 0 10px 10px;
+    box-shadow: 2px 2px 2px #eee
+}
+
+.view-module-classPhoto .photo-list .photo-item .check {
+    width: 30px;
+    height: 30px;
+    background: url("../img/check.png") no-repeat right;
+    position: absolute;
+    top: 3px;
+    right: 3px
+}
+
+.view-module-classPhoto .photo-list .photo-item .check.active {
+    background-position: left
+}
+
+.view-module-classPhoto .photo-list .photo-item .img-cover img {
+    width: 100%;
+    height: 100%
+}
+
+.view-module-classPhoto .photo-list .photo-item .class-album-info {
+    padding: 5px
+}
+
+.view-module-classPhoto .photo-list .photo-item .class-album-info span {
+    color: #aaa;
+    font-size: 12px
+}
+
+.view-module-classPhoto .confirm-button {
+    background-color: #4AC8D6;
+    padding: 5px
+}
+
+.view-module-classPhoto .confirm-button a {
+    width: 50%;
+    display: block;
+    float: left;
+    height: 100%;
+    padding: 6px;
+    color: white;
+    text-align: center;
+    line-height: 22px;
+    font-size: 18px
+}
+
+.view-module-classPhoto .weui_dialog_alert {
+    display: none
+}
+
+.view-module-classPhoto .weui_dialog_alert .weui_dialog_bd span {
+    color: #4AC8D6
+}
+
+.view-module-classPhoto .weui_dialog_alert input {
+    margin-top: 20px;
+    text-align: center;
+    width: 100%;
+    padding: 15px 10px;
+    border: 1px solid #4AC8D6
+}
+
+.view-module-classPhotoDetail {
+    width: 100%;
+    height: 100%;
+    position: absolute
+}
+
+.view-module-classPhotoDetail .weui_dialog_alert {
+    display: none
+}
+
+.view-module-classPhotoDetail .detail-header {
+    position: relative
+}
+
+.view-module-classPhotoDetail .detail-header img {
+    vertical-align: top
+}
+
+.view-module-classPhotoDetail .detail-header i {
+    position: absolute;
+    color: white;
+    right: 5px;
+    bottom: 5px
+}
+
+.view-module-classPhotoDetail .detail-title {
+    padding: 10px;
+    text-align: center;
+    background: white;
+    box-shadow: 0 1px 4px #ddd
+}
+
+.view-module-classPhotoDetail .detail-title span.photo-count {
+    float: right;
+    color: #B0B0B0;
+    font-size: 13px;
+    line-height: 25px
+}
+
+.view-module-classPhotoDetail .detail-title h3 {
+    font-size: 17px;
+    margin: 0 30px 3px 30px
+}
+
+.view-module-classPhotoDetail .detail-title input {
+    border: 1px solid #ddd;
+    padding: 8px 5px;
+    font-size: 16px;
+    text-align: center
+}
+
+.view-module-classPhotoDetail .detail-title i {
+    font-size: 30px;
+    margin-left: 5px;
+    vertical-align: middle
+}
+
+.view-module-classPhotoDetail .detail-title i.icon-roundcheckfill {
+    color: #4AC8D6
+}
+
+.view-module-classPhotoDetail .detail-title i.icon-roundclosefill {
+    color: red
+}
+
+.view-module-classPhotoDetail .photo-list {
+    overflow: hidden;
+    width: 100%
+}
+
+.view-module-classPhotoDetail .photo-list a {
+    float: left;
+    position: relative;
+    margin: 10px 0 10px 10px
+}
+
+.view-module-classPhotoDetail .photo-list a .photo-cover {
+    overflow: hidden
+}
+
+.view-module-classPhotoDetail .photo-list a .check {
+    width: 30px;
+    height: 30px;
+    background: url("../img/check.png") no-repeat right;
+    position: absolute;
+    top: 3px;
+    right: 3px
+}
+
+.view-module-classPhotoDetail .photo-list a .check.active {
+    background-position: left
+}
+
+.view-module-classPhotoDetail .photo-list a img {
+    width: 100%
+}
+
+.view-module-classPhotoDetail .confirm-button {
+    background-color: #4AC8D6;
+    padding: 5px
+}
+
+.view-module-classPhotoDetail .confirm-button a {
+    width: 50%;
+    display: block;
+    float: left;
+    height: 100%;
+    padding: 6px;
+    color: white;
+    text-align: center;
+    line-height: 22px;
+    font-size: 18px
+}
+
+.view-module-classPhotoDetail .webuploader-container input[type=file] {
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    overflow: visible;
+    cursor: pointer
+}
+
+.view-module-classPhotoDetail .icon-upload-image {
+    position: absolute;
+    color: white;
+    padding: 10px;
+    right: 10px;
+    bottom: 6px;
+    z-index: 10
+}
+
+.view-module-classPhotoDetail .check-show {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%
+}
+
+.view-module-classProfile .class-title {
+    font-size: 18px;
+    padding: 10px
+}
+
+.view-module-classProfile .content .class-content {
+    padding: 15px;
+    text-indent: 2em;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd
+}
+
+.view-module-classProfile .content .class-content.no-profile {
+    text-align: center;
+    text-indent: 0
+}
+
+.view-module-classProfile .content .teacher-list ul {
+    padding: 5px 0
+}
+
+.view-module-classProfile .content .teacher-list ul li.teacher-item {
+    float: left;
+    text-align: center;
+    margin: 10px 0 10px 20px
+}
+
+.view-module-classProfile .content .teacher-list ul li.teacher-item img {
+    width: 100%;
+    height: 100%
+}
+
+.attachment-list .attachment-item {
+    margin: 5px 0
+}
+
+.attachment-list .attachment-item a {
+    height: 52px;
+    border: 1px solid #CCCCC9;
+    display: block
+}
+
+.attachment-list .attachment-item a > span.attachment-thumb {
+    float: left;
+    width: 53px;
+    height: 53px;
+    margin: -1px 0px -2px -2px;
+    background: url("../img/doc.png") 100% 100%;
+    background-position: center
+}
+
+.attachment-list .attachment-item a div.attachment-info {
+    color: #666;
+    background: #F5F5F5;
+    overflow: hidden;
+    height: 50px;
+    margin-left: 52px;
+    padding: 15px 10px
+}
+
+.attachment-list .attachment-item a div.attachment-info .attachment-name {
+    float: left;
+    width: 85%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis
+}
+
+.attachment-list .attachment-item a div.attachment-info i {
+    width: 10%;
+    height: 25px;
+    float: right;
+    background-size: 100% 100%;
+    background: url("../img/arrow6.jpg");
+    background-position: center
+}
+
+body {
+    -webkit-tap-highlight-color: transparent;
+    color: #333
+}
+
+body .find-more {
+    float: right;
+    color: #666;
+    font-size: 14px
+}
+
+body a {
+    color: #333
+}
+
+body a, body img, body button, body input, body i, body div, body li, body textarea {
+    -webkit-tap-highlight-color: transparent
+}
+
+body a:focus {
+    text-decoration: none;
+    outline: none;
+    background-color: transparent
+}
+
+body a:active {
+    text-decoration: none;
+    outline: none;
+    background-color: transparent
+}
+
+body a:hover {
+    text-decoration: none;
+    outline: none;
+    background-color: transparent
+}
+
+body #PictureModal {
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 1040;
+    background-color: rgba(0, 0, 0, 0.5)
+}
+
+body #PictureModal .modal-content {
+    background: none;
+    border: none;
+    box-shadow: none
+}
+
+body #PictureModal .modal-body {
+    padding: 0
+}
+
+body #PictureModal .modal-dialog {
+    left: 50%;
+    margin: -27px 0 0;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%) !important;
+    transform: translate(-50%, -50%) !important;
+    width: auto
+}
+
+body .item-txt p, body .item-txt b {
+    color: #999 !important
+}
+
+body .photoList .photoItem img {
+    text-align: center;
+    max-width: 100%
+}
+
+body .no-content {
+    border-top: 1px solid #eee;
+    text-align: center;
+    margin-top: 10px;
+    padding: 11px
+}
+
+body .icon-contain {
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    color: #909090
+}
+
+body .icon-contain i {
+    font-size: 24px
+}
+
+body .icon-contain b, body .icon-contain .num {
+    vertical-align: top;
+    font-size: 16px;
+    line-height: 28px
+}
+
+body i.has-praised {
+    color: #2c67ad
+}
+
+body .count {
+    font-size: 20px !important
+}
+
+body .count + b {
+    line-height: 23px !important;
+    font-size: 14px;
+    margin-left: 3px
+}
+
+body .praise {
+    overflow: hidden
+}
+
+body .praise .praise-comment {
+    color: #909090;
+    display: table;
+    float: right;
+    font-size: 20px;
+    padding: 0 15px
+}
+
+body .praise .praise-comment > p {
+    display: inline-block;
+    margin-right: 5px;
+    padding: 10px;
+    cursor: pointer;
+    margin-bottom: 0
+}
+
+body .praise .praise-comment > span {
+    display: inline-block;
+    margin-right: 5px;
+    padding: 10px 0;
+    cursor: pointer
+}
+
+body .praise .praise-comment > span i.has-praised {
+    color: #2c67ad
+}
+
+body .praise-count {
+    border-top: 1px solid #EEEEEE;
+    padding: 10px;
+    color: #666
+}
+
+body .praise-count p {
+    margin-left: 30px;
+    line-height: 22px
+}
+
+body .praise-count .icon-praise-count {
+    float: left;
+    padding-left: 5px;
+    color: #4AC8D4
+}
+
+body .comments {
+    padding: 0 15px 15px 15px
+}
+
+body .comments .comment-item {
+    position: relative
+}
+
+body .comments .main-comment {
+    margin-bottom: 3px;
+    line-height: 22px
+}
+
+body .comments .main-comment.active {
+    background: #F2F2F2
+}
+
+body .comments .main-comment .comment-delete, body .comments .main-comment .comment-delete-inner {
+    width: 50px;
+    background-color: #515151;
+    border-radius: 4px;
+    height: 30px;
+    padding: 4px 5px;
+    position: absolute;
+    top: -38px;
+    left: 50%;
+    z-index: 3;
+    margin-left: -25px;
+    text-align: center
+}
+
+body .comments .main-comment .comment-delete span, body .comments .main-comment .comment-delete-inner span {
+    display: inline;
+    font-size: 13px;
+    color: #fef8f8 !important
+}
+
+body .comments .main-comment .comment-delete i, body .comments .main-comment .comment-delete-inner i {
+    display: block;
+    height: 0;
+    width: 0;
+    border-top: 12px solid transparent;
+    border-right: 12px solid #515151;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    margin: -4px auto 0 auto
+}
+
+body .comments .main-comment .comment-delete-inner {
+    width: 80px;
+    color: #fef8f8
+}
+
+body .comments .main-comment span {
+    color: #666
+}
+
+body .comments .sub-comment {
+    margin-left: 40px
+}
+
+body .comments .sub-comment.active {
+    background: #F2F2F2
+}
+
+body .show-comment {
+    padding: 15px;
+    background-color: #fafafa;
+    overflow: hidden
+}
+
+body .show-comment input {
+    display: inline-block;
+    width: 85%;
+    padding: 3px 5px;
+    border: 1px solid #c0e073;
+    border-radius: 4px;
+    float: left
+}
+
+body .show-comment span {
+    width: 12%;
+    text-align: center;
+    display: block;
+    float: right;
+    padding: 3px 2px;
+    border-radius: 4px;
+    border: 1px solid #c0e073;
+    background-color: #fff
+}
+
+body embed {
+    height: 0
+}
+
+body .gray {
+    color: #909090
+}
+
+body .red-dot {
+    position: absolute;
+    width: 13px;
+    height: 13px;
+    left: 52px;
+    top: -6px;
+    z-index: 99;
+    border-radius: 50%;
+    background: #f94336;
+    display: none
+}
+
+body .red-dot.active {
+    display: block
+}
+
+body .confirm-button {
+    bottom: 0;
+    left: 0;
+    padding: 0;
+    position: fixed;
+    right: 0;
+    top: auto;
+    z-index: 2
+}
+
+body .confirm-button .btn {
+    background-color: #4AC8D6;
+    color: #fff;
+    border-radius: 0;
+    padding: 11px;
+    line-height: 22px;
+    font-size: 16px;
+    width: 100%;
+    display: block;
+    text-align: center
+}
+
+body .confirm-button .btn i {
+    font-size: 18px
+}
+
+body .confirm-button a.create-button {
+    border-left: 1px solid #fff;
+    position: relative
+}
+
+body .confirm-button a.create-button.max {
+    width: 100%;
+    border-left: none
+}
+
+body .confirm-button a.upload-bigPhoto {
+    position: fixed;
+    right: 7px;
+    bottom: 50px;
+    background: #4AC8D4;
+    z-index: 30;
+    height: 42px;
+    width: 130px;
+    padding: 0;
+    line-height: 42px
+}
+
+body .delete-button {
+    background: white;
+    width: 100%;
+    padding: 15px;
+    position: fixed;
+    z-index: 100;
+    bottom: 0
+}
+
+body .delete-button .btn {
+    background-color: #4AC8D6;
+    color: #fff;
+    border-radius: 0;
+    padding: 11px;
+    font-size: 16px;
+    width: 100%;
+    display: block;
+    text-align: center;
+    line-height: 22px
+}
+
+body .mt10 {
+    margin-top: 10px
+}
+
+body .mt15 {
+    margin-top: 15px
+}
+
+body .pd15 {
+    padding: 15px
+}
+
+body .ml20 {
+    margin-left: 20px
+}
+
+body .weui_dialog_alert .weui_dialog_hd {
+    padding: 0
+}
+
+body .weui_dialog_alert .weui_dialog {
+    padding-top: 20px;
+    width: 78%;
+    border-radius: 5px;
+    border: 1px solid #4AC8D6
+}
+
+body .weui_dialog_alert .weui_dialog_ft {
+    text-align: center;
+    padding: 5px;
+    display: block
+}
+
+body .weui_dialog_alert .weui_dialog_ft a {
+    display: inline;
+    color: white;
+    background: #4AC8D6;
+    padding: 6px 18px;
+    border-radius: 10px;
+    font-size: 13px
+}
+
+body .weui_dialog_alert .weui_dialog_ft a.cancel {
+    color: #B1B1B1;
+    background: white;
+    margin-left: 18px;
+    border: 1px solid #B1B1B1
+}
+
+body .form-photo-list {
+    background: white;
+    padding: 15px 15px 5px 15px;
+    overflow: hidden
+}
+
+body .form-photo-list .icon-add {
+    width: 60px;
+    height: 60px;
+    border: 1px solid #bebebe;
+    text-align: center;
+    line-height: 58px;
+    color: #bebebe;
+    font-size: 50px;
+    font-weight: 100
+}
+
+body .form-photo-list .form-photo-item {
+    float: left;
+    margin: 0 8px 5px 0;
+    position: relative;
+    width: 60px;
+    height: 60px;
+    border: 1px solid #ddd;
+    text-align: center
+}
+
+body .form-photo-list .form-photo-item img {
+    float: left;
+    width: 58px;
+    height: 58px
+}
+
+body .form-photo-list input {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    left: 0;
+    top: 0;
+    border: 0;
+    background: none;
+    text-indent: -9999px
+}
+
+body .photo-warn {
+    background: white;
+    padding: 0 15px 15px 15px;
+    color: #999
+}
+
+body #imgUpload {
+    display: none
+}
+
+body .weui_mask {
+    background: rgba(0, 0, 0, 0.2)
+}
+
+body .imgUpload {
+    left: 50%;
+    top: 200px;
+    color: #fff;
+    height: 50px;
+    width: 200px;
+    padding: 15px;
+    font-size: 16px;
+    margin-left: -100px;
+    text-align: center;
+    background: #4ac8d7;
+    overflow: hidden;
+    position: fixed;
+    z-index: 9999
+}
+
+body .form-webuploader {
+    font-size: 60px;
+    width: 60px;
+    height: 60px;
+    float: left;
+    padding: 0;
+    text-align: center;
+    font-weight: 100;
+    line-height: 50px;
+    position: relative;
+    border: 1px solid #bebebe;
+    background-color: #fff;
+    color: #bebebe;
+    cursor: pointer;
+    margin: 0 8px 5px 0;
+    overflow: hidden
+}
+
+body .slide-view {
+    background: #000;
+    position: absolute;
+    min-width: 100%;
+    height: 100%;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    z-index: 9999
+}
+
+body .slide-view .counts {
+    position: absolute;
+    top: 5%;
+    left: 0;
+    right: 0;
+    text-align: center
+}
+
+body .slide-view .counts .value {
+    border-radius: 9px;
+    line-height: 18px;
+    padding: 0 6px;
+    font-size: 11px;
+    display: inline-block;
+    background-color: rgba(102, 102, 102, 0.6);
+    color: #f1f1f1
+}
+
+body .slide-view .ui-loading {
+    position: absolute;
+    margin: -10px 0 0 -10px;
+    left: 50%;
+    top: 50%
+}
+
+body .pv-inner {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: relative;
+    z-index: -1;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    -webkit-transition: all 350ms linear;
+    -webkit-backface-visibility: hidden;
+    -moz-transition: all 350ms linear;
+    -moz-backface-visibility: hidden;
+    transition: all 350ms linear;
+    backface-visibility: hidden
+}
+
+body .pv-inner li {
+    margin: 0;
+    padding: 0;
+    text-align: center
+}
+
+body .pv-inner img {
+    max-width: 96%;
+    vertical-align: middle;
+    -webkit-transform: scale(1) translate(0px, 0px);
+    transform: scale(1) translate(0px, 0px);
+    max-height: 96%;
+    visibility: visible;
+    transition: 200ms;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+}
+
+body #previewPictureModal {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 9999
+}
+
+body #previewPictureModal .mask {
+    width: 100%;
+    height: 100%;
+    background: #333;
+    opacity: 0.4;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1
+}
+
+body #previewPictureModal .modal-dialog {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 2
+}
+
+body #previewPictureModal .modal-dialog .modal-content {
+    width: 100%;
+    position: absolute;
+    top: 20%
+}
+
+body #previewPictureModal .modal-footer {
+    width: 100%;
+    height: 42px;
+    line-height: 42px;
+    text-align: center;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    background: #394345;
+    z-index: 3
+}
+
+body #previewPictureModal .modal-footer a {
+    display: block;
+    width: 100%;
+    height: 42px;
+    line-height: 42px;
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 9999
+}
+
+body .editor-audio {
+    margin: 10px 0;
+    height: 45px;
+    border: 1px solid #ededed;
+    border-radius: 8px;
+    background-color: #fbfbfb
+}
+
+body .editor-audio .playEditorAudio {
+    cursor: pointer
+}
+
+body .editor-audio a img {
+    border-radius: 8px
+}
+
+body .editor-audio img {
+    height: 45px !important;
+    width: 58px !important;
+    vertical-align: top;
+    display: inline-block !important;
+    margin: 0 !important
+}
+
+body .editor-audio span {
+    width: 75%;
+    margin-left: 5px;
+    overflow: hidden;
+    font-size: 14px;
+    white-space: nowrap;
+    display: inline-block;
+    line-height: 45px;
+    vertical-align: top;
+    text-overflow: ellipsis
+}
+
+body .tipModel {
+    border-radius: 3px;
+    display: none;
+    height: 40px;
+    left: 50%;
+    margin-left: -145px;
+    overflow: hidden;
+    position: fixed;
+    top: 180px;
+    width: 290px
+}
+
+body .tipModel i {
+    background: #333 none repeat scroll 0 0;
+    display: block;
+    height: 40px;
+    opacity: 0.7;
+    width: 290px
+}
+
+body .tipModel span {
+    color: #fff;
+    display: block;
+    font-size: 15px;
+    height: 40px;
+    line-height: 40px;
+    position: relative;
+    text-align: center;
+    top: -40px;
+    width: 290px
+}
+
+body .update-album .del-choice {
+    border-top: 1px solid #aaa
+}
+
+body .update-album .del-text {
+    border-bottom: none !important
+}
+
+body .update-album .del-confirm > p {
+    text-align: center;
+    padding: 0 20px 20px 20px
+}
+
+body .update-album .del-confirm > p input {
+    text-align: center;
+    border: 1px solid #eee;
+    padding: 10px;
+    width: 100%
+}
+
+body .del-show {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 500
+}
+
+body .del-show .del-mask {
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.7;
+    z-index: 1050
+}
+
+body .del-show .del-confirm {
+    position: fixed;
+    top: 40%;
+    left: 20px;
+    z-index: 9999;
+    border-radius: 4px;
+    width: 90%;
+    color: #333;
+    background: #fff
+}
+
+body .del-show .del-confirm .del-text {
+    border-radius: 5px 5px 0 0;
+    border-bottom: 1px solid #aaa
+}
+
+body .del-show .del-confirm .del-text, body .del-show .del-confirm .del-choice {
+    height: 50px;
+    background: #fff;
+    text-align: center;
+    font-size: 16px;
+    line-height: 50px
+}
+
+body .del-show .del-confirm .del-choice {
+    height: 40px;
+    line-height: 40px;
+    border-radius: 0 0 5px 5px
+}
+
+body .del-show .del-confirm .del-choice .del-yes {
+    border-right: 1px solid #aaa
+}
+
+body .del-show .del-confirm .del-choice .del-yes, body .del-show .del-confirm .del-choice .del-no {
+    height: 100%;
+    display: block;
+    width: 50%;
+    float: left;
+    cursor: pointer;
+    color: #ce0000
+}
+
+body .del-show .del-confirm .del-choice .del-yes:hover, body .del-show .del-confirm .del-choice .del-no:hover {
+    text-decoration: none
+}
+
+body .del-show .del-confirm .del-choice .del-no {
+    color: #9a9a9a
+}
+
+body .del-show .del-confirm .del-choice .del-yes:hover, body .del-show .del-confirm .del-choice .del-no:hover {
+    text-decoration: none
+}
+
+body .video-box {
+    margin: 10px 0
+}
+
+body embed, body iframe {
+    max-width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px
+}
+
+body .no-data-box {
+    padding: 7px;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 60%;
+    height: 200px;
+    font-size: 16px !important;
+    letter-spacing: 0
+}
+
+body .no-data-box img {
+    height: 100%;
+    margin-bottom: 10px
+}
+
+body .no-data-box.active {
+    display: block
+}
+
+body .class-noMore-item {
+    text-align: center
+}
+
+[v-cloak] {
+    display: none
+}

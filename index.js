@@ -1,5 +1,4 @@
 const express = require('express')
-const static = require('express-static')
 const cookieParser = require('cookie-parser')
 const cookieSession = require('cookie-session')
 const bodyParser = require('body-parser')
@@ -10,9 +9,18 @@ const multer = require('multer')
 const fs = require('fs')
 const path = require('path')
 const consolidate = require('consolidate')
+const mysql = require('mysql')
+
 var server = express();
 var upload = multer({ dest: './www' })
-
+//连接池
+var db = mysql.createPool({
+    port: 3306,
+    host: 'localhost',
+    database: 'blog_db',
+    user: 'root',
+    password: 'lzx123'
+})
 const router = express.Router()
 router.get('/login',(req,res)=>{
     res.render('login.ejs')
@@ -75,16 +83,67 @@ server.post('/upload', upload.single('wenjian'), (req, res, next) => {
 //1.输出什么东西
 server.set('view engine','html');
 //2.模板文件放在哪儿
-server.set('views','./views');
+server.set('views','./template');
 //使用哪种模板引擎
 server.engine('html', consolidate.ejs);
 
 server.use('/postoss',(req,res)=>{
     res.render('hello.ejs',{name: 'xiang'})
 })
+function getBanner(res) {
+    return new Promise((resolve,reject)=>{
+        var sql = 'SELECT * FROM `banner_table`';
+        db.query(sql,(err,data)=>{
+            if(err){
+                res.status(400).send('服务器错误').end()
+                reject()
+            }else {
+                res.banners = data;
+                resolve(data)
+
+            }
+        })
+    })
+}
+function getModules(res) {
+    return new Promise((resolve,reject)=>{
+        var sql2 = 'SELECT * FROM `module_table`'
+        db.query(sql2,(err,data)=>{
+            if(err){
+                res.status(400).send('database error').end()
+                reject()
+            }else {
+                res.modules = data;
+                resolve(data)
+            }
+        })
+    })
+}
+function getSummary(res){
+    var sql3 = 'SELECT id, auth_avatar, summary FROM `content_table`';
+    return new Promise((resolve,reject)=>{
+        db.query(sql3, (err,data)=>{
+            if(err){
+
+            }else {
+                res.contents = data;
+                resolve()
+            }
+        })
+    })
+}
+server.get('/',(req,res,next)=>{
+    Promise.all([getBanner(res),getModules(res), getSummary(res)]).then((result)=>{
+        res.render('index.ejs',{
+            banners: res.banners,
+            modules: res.modules,
+            contents: res.contents
+        })
+    })
+})
 
 //设置静态文件解析目录
-server.use(express.static(__dirname + '/views'))
+server.use(express.static(__dirname + '/template'))
 
 server.listen(6789)
 console.log('server listen on 6789')
