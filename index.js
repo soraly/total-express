@@ -10,9 +10,9 @@ const fs = require('fs')
 const path = require('path')
 const consolidate = require('consolidate')
 const mysql = require('mysql')
-
+const urlLib = require('url')
 var server = express();
-var upload = multer({ dest: './www' })
+var upload = multer({dest: './www'})
 //连接池
 var db = mysql.createPool({
     port: 3306,
@@ -22,13 +22,13 @@ var db = mysql.createPool({
     password: 'lzx123'
 })
 const router = express.Router()
-router.get('/login',(req,res)=>{
+router.get('/login', (req, res) => {
     res.render('login.ejs')
 })
-router.get('/register',(req,res)=>{
+router.get('/register', (req, res) => {
     res.render('register.ejs')
 })
-server.use('/user',router)
+server.use('/user', router)
 //设置签名，解析cookies
 server.use(cookieParser('abcd'))
 
@@ -57,13 +57,15 @@ server.use('/', (req, res, next) => {
 //利用multer上传表单文件
 server.post('/upload', upload.single('wenjian'), (req, res, next) => {
     console.log(req.file, 'multer-files');
-    res.cookie('name','xiang',{'maxAge': 24*3600*1000})
+    res.cookie('name', 'xiang', {'maxAge': 24 * 3600 * 1000})
     console.log(req.cookies, 'req.cookies')
     if (req.file) {
         //如果上传了文件，解析并加上后缀名
         var ext = path.parse(req.file.originalname).ext;
         fs.rename(req.file.path, req.file.path + ext, (err) => {
-            if (err) { console.log(err, 'err') } else {
+            if (err) {
+                console.log(err, 'err')
+            } else {
                 console.log('rename done')
             }
         })
@@ -75,29 +77,30 @@ server.post('/upload', upload.single('wenjian'), (req, res, next) => {
         password: req.body.password,
         phone: req.body.phone
     }
-    res.render('hello.ejs',data);
+    res.render('hello.ejs', data);
     res.end('done')
 })
 
 //配置模板引擎
 //1.输出什么东西
-server.set('view engine','html');
+server.set('view engine', 'html');
 //2.模板文件放在哪儿
-server.set('views','./template');
+server.set('views', './template');
 //使用哪种模板引擎
 server.engine('html', consolidate.ejs);
 
-server.use('/postoss',(req,res)=>{
-    res.render('hello.ejs',{name: 'xiang'})
+server.use('/postoss', (req, res) => {
+    res.render('hello.ejs', {name: 'xiang'})
 })
+
 function getBanner(res) {
-    return new Promise((resolve,reject)=>{
+    return new Promise((resolve, reject) => {
         var sql = 'SELECT * FROM `banner_table`';
-        db.query(sql,(err,data)=>{
-            if(err){
+        db.query(sql, (err, data) => {
+            if (err) {
                 res.status(400).send('服务器错误').end()
                 reject()
-            }else {
+            } else {
                 res.banners = data;
                 resolve(data)
 
@@ -105,43 +108,66 @@ function getBanner(res) {
         })
     })
 }
+
 function getModules(res) {
-    return new Promise((resolve,reject)=>{
+    return new Promise((resolve, reject) => {
         var sql2 = 'SELECT * FROM `module_table`'
-        db.query(sql2,(err,data)=>{
-            if(err){
+        db.query(sql2, (err, data) => {
+            if (err) {
                 res.status(400).send('database error').end()
                 reject()
-            }else {
+            } else {
                 res.modules = data;
                 resolve(data)
             }
         })
     })
 }
-function getSummary(res){
-    var sql3 = 'SELECT id, auth_avatar, summary FROM `content_table`';
-    return new Promise((resolve,reject)=>{
-        db.query(sql3, (err,data)=>{
-            if(err){
 
-            }else {
+function getSummary(res) {
+    var sql3 = 'SELECT id, auth_avatar, summary FROM `content_table`';
+    return new Promise((resolve, reject) => {
+        db.query(sql3, (err, data) => {
+            if (err) {
+
+            } else {
                 res.contents = data;
                 resolve()
             }
         })
     })
 }
-server.get('/',(req,res,next)=>{
-    Promise.all([getBanner(res),getModules(res), getSummary(res)]).then((result)=>{
-        res.render('index.ejs',{
+
+function getContent(id, res) {
+    var sql3 = 'SELECT * FROM `content_table` WHERE id =' + id;
+    return new Promise((resolve, reject) => {
+        db.query(sql3, (err, data) => {
+            if (err) {
+                res.status(500).send('error...').end()
+            } else {
+                resolve(data)
+            }
+        })
+    })
+}
+
+server.get('/', (req, res, next) => {
+    Promise.all([getBanner(res), getModules(res), getSummary(res)]).then((result) => {
+        res.render('index.ejs', {
             banners: res.banners,
             modules: res.modules,
             contents: res.contents
         })
     })
 })
+server.get('/content', (req, res) => {
+    var p_url = urlLib.parse(req.url, true)
+    var id = p_url.query.id;
+    getContent(id, res).then((data) => {
+        res.render('content.ejs', {content: data[0]})
+    })
 
+})
 //设置静态文件解析目录
 server.use(express.static(__dirname + '/template'))
 

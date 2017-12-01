@@ -24,7 +24,7 @@
     <script>
         $(function () {
             var mySwipe = Swipe($('.banner')[0], {
-                auto: 2000,
+                auto: false,
                 continuous: true,
                 stopPropation: true,
                 callback: function (index, element) {
@@ -80,7 +80,7 @@
         <ul>
             <% for (var i = 0;i < contents.length;i++){ %>
             <li>
-                <a href="conText.ejs">
+                <a href=<%='/content?id='+contents[i].id%>>
                     <img src=<%= contents[i].auth_avatar %> alt="">
                     <p><%= contents[i].summary %></p>
                 </a>

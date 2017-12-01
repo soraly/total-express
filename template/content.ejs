@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name=" apple-mobile-web-app-capable"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta http-equiv="Cache-Control" content="max-age=0" />
+    <link href="css/base.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="css/iconfont.css?v=1508213070282">
+    <style>
+        body {
+            font-size: 13px;
+        }
+        header {
+            padding: 10px 15px 10px 15px;
+            border-bottom: solid 1px #ccc;
+            background-color: #efefef;
+        }
+        header h2 {
+            text-align: center;
+        }
+        header>div {
+            margin-top: 5px;
+            display: flex;
+        }
+        header>div p:first-child {
+            width: 70%;
+        }
+        header>div p:last-child {
+            box-sizing: border-box;
+            padding-left:20px;
+            width: 30%;
+        }
+        section {
+            text-indent: 2rem;
+            line-height: 20px;
+            padding: 20px;
+            border-bottom: solid 1px #ccc;
+        }
+        footer {
+            padding: 20px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body  class="content">
+    <header>
+        <h2><%=content.title%></h2>
+        <div>
+            <p class="content_info">
+                <span>发布人：<%=content.auth%></span>
+                <span style="margin-left: 10px"><%=new Date(content.post_time*1000).toGMTString()%></span>
+            </p>
+            <p class="content_praise">
+                <a href=""><i class="iconfont icon-appreciatefill"></i><span><%=content.n_praise%></span></a>
+                <a style="margin-left: 10px;" href=""><i class="iconfont icon-delete"></i></a>
+            </p>
+        </div>
+    </header>
+    <section>
+        <%=content.content%>
+    </section>
+    <footer>
+        点我评论
+    </footer>
+</body>
+
+</html>
+
