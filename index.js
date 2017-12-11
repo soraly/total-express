@@ -12,7 +12,7 @@ const consolidate = require('consolidate')
 const mysql = require('mysql')
 const urlLib = require('url')
 var server = express();
-var upload = multer({dest: './www'})
+var upload = multer({dest: './template/uploadedImg'})
 //连接池
 var db = mysql.createPool({
     port: 3306,
@@ -40,7 +40,7 @@ server.use(cookieSession({
 }))
 
 //解析post数据
-//server.use(bodyParser.urlencoded({extended: false}))
+server.use(bodyParser.urlencoded({extended: false}))
 
 
 //处理用户请求
@@ -92,6 +92,7 @@ server.engine('html', consolidate.ejs);
 server.use('/postoss', (req, res) => {
     res.render('hello.ejs', {name: 'xiang'})
 })
+
 
 function getBanner(res) {
     return new Promise((resolve, reject) => {
@@ -151,7 +152,22 @@ function getContent(id, res) {
     })
 }
 
-server.get('/', (req, res, next) => {
+function addContent(data,res) {
+    return new Promise((resolve, reject) => {
+        var sql = `INSERT INTO content_table VALUES(null, '${data.auth}', '${data.auth_avatar}', '${data.title}', '${data.content}', '${data.summary}', '${data.n_praise}', '${data.post_time}' )`;
+        db.query(sql,(err, data)=>{
+            if (err) {
+                console.log(err,'err');
+                res.status(500).send('写入数据错误').end();
+            } else {
+                console.log(data,'data')
+                resolve()
+            }
+        })
+    })
+}
+
+server.all('/', (req, res, next) => {
     Promise.all([getBanner(res), getModules(res), getSummary(res)]).then((result) => {
         res.render('index.ejs', {
             banners: res.banners,
@@ -161,15 +177,58 @@ server.get('/', (req, res, next) => {
     })
 })
 server.get('/content', (req, res) => {
-    var p_url = urlLib.parse(req.url, true)
-    var id = p_url.query.id;
+    // var p_url = urlLib.parse(req.url, true)
+    // var id = p_url.query.id;
+    var id = req.query.id;
     getContent(id, res).then((data) => {
         res.render('content.ejs', {content: data[0]})
     })
-
 })
-//设置静态文件解析目录
-server.use(express.static(__dirname + '/template'))
+server.get('/add', (req, res) => {
+    res.render('add.ejs', {})
+})
 
-server.listen(6789)
-console.log('server listen on 6789')
+//接收form表单提交的数据，用multer接收file文件
+server.post('/uploadData',upload.single('photo'),  (req, res) => {
+    var data = {
+        auth: '刘志翔',
+        auth_avatar: 'images/p5.jpg',
+        title: req.body.title,
+        content: req.body.content,
+        summary: req.body.content,
+        n_praise: 10,
+        post_time: Math.round(+new Date() / 1000)
+    }
+    if(req.file){
+        var ext = path.parse(req.file.originalname).ext;
+        fs.rename(req.file.path, req.file.path+ext,()=>{
+            data.auth_avatar = 'uploadedImg/' + req.file.filename + ext;
+            addContent(data,res).then(()=>{
+                //路由跳转，需要先重定向，参见 https://www.cnblogs.com/duhuo/p/5609127.html
+                res.redirect(301, 'http://localhost:6789')
+            })
+        })
+    }else{
+        addContent(data,res).then(()=>{
+            res.redirect(301, 'http://localhost:6789');
+        })
+    }
+})
+//原生接收form的file数据
+server.all('/uploadOrigin',(req,res)=>{
+    var buf = Buffer.alloc(0);
+    req.on('data',(data)=>{
+        buf = Buffer.concat([buf,data]);
+    })
+    req.on('end',()=>{
+        console.log(buf,'buf');
+        fs.writeFile('test2',buf);
+        res.redirect(301, 'http://localhost:6789');
+    })
+})
+
+//设置静态文件解析目录
+server.use(express.static(__dirname + '/template'));
+
+server.listen(6789);
+console.log('server listen on 6789');

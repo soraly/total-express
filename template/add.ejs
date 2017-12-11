@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name=" apple-mobile-web-app-capable"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Cache-Control" content="no-cache"/>
+    <meta http-equiv="Cache-Control" content="max-age=0"/>
+    <link href="css/base.css" rel="stylesheet" type="text/css">
+    <script src="js/font.js"></script>
+    <link rel="stylesheet" href="css/iconfont.css?v=1508213070282">
+    <style>
+        body {
+            font-size: 13px;
+            background: rgb(243, 243, 243);
+        }
+        footer button {
+            border: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            font-size: 0.32rem;
+            width: 100%;
+            height: 0.88rem;
+            background: #4AC8D6;
+            color: #fff;
+            text-align: center;
+            line-height: 0.88rem;
+        }
+
+        header {
+            background: #fff;
+            padding: 0.2rem 0.5rem 0.2rem 0.3rem;
+            border-bottom: 1px solid #e3e3e3;
+        }
+        header input {
+            border: none;
+        }
+        section {
+            background: #fff;
+            padding: 0.4rem 0.5rem 0.2rem 0.4rem;
+        }
+        section textarea {
+            border: none;
+        }
+    </style>
+</head>
+<body class="content">
+    <form action="http://localhost:6789/uploadOrigin" method="post" enctype="multipart/form-data">
+        <header>
+            <input name="title" type="text" placeholder="请输入标题">
+        </header>
+        <section>
+            <textarea name="content" id="" cols="30" rows="10" placeholder="请输入内容"></textarea>
+            <input name="photo" type="file">
+            <p>最多上传9张照片</p>
+        </section>
+        <footer>
+            <button>发布</button>
+        </footer>
+    </form>
+</body>
+</html>
+
