@@ -810,90 +810,90 @@
              * @method loadXML
              * @grammar Base.loadXML() => String
              */
-            loadXML: function(xmlString) {
-            var xmlDoc = null;
-            //判断浏览器的类型
-            //支持IE浏览器
-            if (!window.DOMParser && window.ActiveXObject) {   //window.DOMParser 判断是否是非ie浏览器
-                var xmlDomVersions = ['MSXML.2.DOMDocument.6.0', 'MSXML.2.DOMDocument.3.0', 'Microsoft.XMLDOM'];
-                for (var i = 0; i < xmlDomVersions.length; i++) {
+            loadXML: function (xmlString) {
+                var xmlDoc = null;
+                //判断浏览器的类型
+                //支持IE浏览器
+                if (!window.DOMParser && window.ActiveXObject) {   //window.DOMParser 判断是否是非ie浏览器
+                    var xmlDomVersions = ['MSXML.2.DOMDocument.6.0', 'MSXML.2.DOMDocument.3.0', 'Microsoft.XMLDOM'];
+                    for (var i = 0; i < xmlDomVersions.length; i++) {
+                        try {
+                            xmlDoc = new ActiveXObject(xmlDomVersions[i]);
+                            xmlDoc.async = false;
+                            xmlDoc.loadXML(xmlString); //loadXML方法载入xml字符串
+                            break;
+                        } catch (e) {
+                        }
+                    }
+                }
+                //支持Mozilla浏览器
+                else if (window.DOMParser && document.implementation && document.implementation.createDocument) {
                     try {
-                        xmlDoc = new ActiveXObject(xmlDomVersions[i]);
-                        xmlDoc.async = false;
-                        xmlDoc.loadXML(xmlString); //loadXML方法载入xml字符串
-                        break;
+                        /* DOMParser 对象解析 XML 文本并返回一个 XML Document 对象。
+                         * 要使用 DOMParser，使用不带参数的构造函数来实例化它，然后调用其 parseFromString() 方法
+                         * parseFromString(text, contentType) 参数text:要解析的 XML 标记 参数contentType文本的内容类型
+                         * 可能是 "text/xml" 、"application/xml" 或 "application/xhtml+xml" 中的一个。注意，不支持 "text/html"。
+                         */
+                        domParser = new DOMParser();
+                        xmlDoc = domParser.parseFromString(xmlString, 'text/xml');
                     } catch (e) {
                     }
                 }
-            }
-            //支持Mozilla浏览器
-            else if (window.DOMParser && document.implementation && document.implementation.createDocument) {
-                try {
-                    /* DOMParser 对象解析 XML 文本并返回一个 XML Document 对象。
-                     * 要使用 DOMParser，使用不带参数的构造函数来实例化它，然后调用其 parseFromString() 方法
-                     * parseFromString(text, contentType) 参数text:要解析的 XML 标记 参数contentType文本的内容类型
-                     * 可能是 "text/xml" 、"application/xml" 或 "application/xhtml+xml" 中的一个。注意，不支持 "text/html"。
-                     */
-                    domParser = new DOMParser();
-                    xmlDoc = domParser.parseFromString(xmlString, 'text/xml');
-                } catch (e) {
+                else {
+                    return null;
                 }
-            }
-            else {
-                return null;
-            }
 
-            return xmlDoc;
-        },
+                return xmlDoc;
+            },
 
             /**
              * 定制的ajax
              * @method ajax
              * @grammar Base.ajax() => String
              */
-            ajax: function(url, params, beforesend, callback, errorCallback) {
-            var xmlhttp = null;
-            params = params ? params : {};
+            ajax: function (url, params, beforesend, callback, errorCallback) {
+                var xmlhttp = null;
+                params = params ? params : {};
 
-            if (window.XMLHttpRequest) {
-                xmlhttp = new XMLHttpRequest();
-            } else if (window.ActiveXObject) {
-                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-            if (xmlhttp != null) {
-                xmlhttp.onreadystatechange = function () {
-                    if (xmlhttp.readyState == 4) {
-                        if (xmlhttp.status == 200) {
-                            if (typeof (callback) != 'undefined') {
-                                callback(xmlhttp.responseText);
-                            }
-                        } else {
-                            if (typeof (errorCallback) != 'undefined') {
-                                errorCallback(xmlhttp.responseText);
+                if (window.XMLHttpRequest) {
+                    xmlhttp = new XMLHttpRequest();
+                } else if (window.ActiveXObject) {
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                if (xmlhttp != null) {
+                    xmlhttp.onreadystatechange = function () {
+                        if (xmlhttp.readyState == 4) {
+                            if (xmlhttp.status == 200) {
+                                if (typeof (callback) != 'undefined') {
+                                    callback(xmlhttp.responseText);
+                                }
+                            } else {
+                                if (typeof (errorCallback) != 'undefined') {
+                                    errorCallback(xmlhttp.responseText);
+                                }
                             }
                         }
+                    };
+                    var method = params.method || 'GET', paramsArr = [];
+                    delete params.method;
+                    for (var key in params) {
+                        paramsArr.push(key + '=' + params[key]);
                     }
-                };
-                var method = params.method || 'GET', paramsArr = [];
-                delete params.method;
-                for (var key in params) {
-                    paramsArr.push(key + '=' + params[key]);
-                }
-                if (method == 'GET') {
-                    if (paramsArr.length) url = url + '?' + paramsArr.join('&');
-                }
-                xmlhttp.open(method, url, true);
-                beforesend && beforesend(xmlhttp);
-                if(params.postData){
-                    xmlhttp.send(params.postData);
-                }else {
-                    xmlhttp.send(paramsArr.join('&'));
-                }
+                    if (method == 'GET') {
+                        if (paramsArr.length) url = url + '?' + paramsArr.join('&');
+                    }
+                    xmlhttp.open(method, url, true);
+                    beforesend && beforesend(xmlhttp);
+                    if (params.postData) {
+                        xmlhttp.send(params.postData);
+                    } else {
+                        xmlhttp.send(paramsArr.join('&'));
+                    }
 
-            } else {
-                console.log("Your browser does not support XMLHTTP.");
+                } else {
+                    console.log("Your browser does not support XMLHTTP.");
+                }
             }
-        }
         };
     });
     /**
@@ -1142,9 +1142,7 @@
 
         // default Options
         // widgets中有相应扩展
-        Uploader.options = {
-
-        };
+        Uploader.options = {};
         Mediator.installTo(Uploader.prototype);
 
         // 批量添加纯命令式方法。
@@ -2900,12 +2898,13 @@
                 //if ( !opts || !~'image/jpeg,image/jpg'.indexOf( file.type ) ||
 
                 // IGrow Extension 加入bmp,gif,png图片压缩功能
+                var igrowApi = ossFlag ? 'oss-igrow-file-status' : 'igrow-file-status';
                 // if (!opts || !~'image/jpeg,image/jpg,image/gif,image/bmp,image/png'.indexOf(file.type) ||
                 if (!opts || !~'image/jpeg,image/jpg,image/gif,image/png'.indexOf(file.type) ||
                     file.size < compressSize ||
                     file._compressed) {
                     // IGrow Extension
-                    me.request('igrow-file-status', file)
+                    me.request(igrowApi, file)
                         .done(deferred.resolve)
                         .fail(function (type, reason) {
                             console.log('获取文件状态接口失败')
@@ -2984,7 +2983,7 @@
                         //deferred.resolve();
                     }
                     // IGrow Extension
-                    me.request('igrow-file-status', file)
+                    me.request(igrowApi, file)
                         .done(function () {
                             deferred.resolve()
                         })
@@ -3427,7 +3426,8 @@
                 //	}
                 //}
                 // IGrow Extension
-                files.length && me.request('oss-check-token').done(function () {
+                var igrowApi = ossFlag ? 'oss-igrow-check-token' : 'igrow-check-token';
+                files.length && me.request(igrowApi).done(function () {
                     files = $.map(files, function (file) {
                         return me._addFile(file);
                     });
@@ -3663,7 +3663,7 @@
 
         Transport.options = {
             server: '',
-            method: 'POST',
+            method: ossFlag ? 'PUT' : 'POST',
 
             // 跨域时，是否允许携带cookie, 只有html5 runtime才有效
             withCredentials: false,
@@ -3671,7 +3671,7 @@
             timeout: 2 * 60 * 1000,    // 2分钟
             formData: {},
             headers: {},
-            sendAsBinary: true
+            sendAsBinary: ossFlag ? true : false
         };
 
         $.extend(Transport.prototype, {
@@ -3930,7 +3930,6 @@
 
                 // 跟踪还有多少分片在上传中但是没有完成上传。
                 this.remaning = 0;
-                //this.etagArr = [];
                 this.__tick = Base.bindFn(this._tick, this);
 
                 owner.on('uploadComplete', function (file) {
@@ -3984,7 +3983,7 @@
 
                 if (file) {
                     file = file.id ? file : me.request('get-file', file);
-                    console.log(file,'file')
+                    console.log(file, 'file')
                     if (file.getStatus() === Status.INTERRUPT) {
                         $.each(me.pool, function (_, v) {
 
@@ -4007,10 +4006,10 @@
                         this.setStatus(Status.QUEUED);
                     });
                 }
-                console.log(me.runing,'runing')
+                console.log(me.runing, 'runing')
                 if (me.runing) {
                     return;
-                }else {
+                } else {
                     me.runing = true;
                 }
 
@@ -4267,7 +4266,6 @@
 
                     // 否则，如果正在运行，则准备下一个文件，并等待完成后返回下个分片。
                 } else if (me.runing) {
-                    console.log(me.runing,'me.runingme.runingme.runing')
                     // 如果缓存中有，则直接在缓存中取，没有则去queue中取。
                     if (!me.pending.length && me._getStats().numOfQueue) {
                         me._prepareNextFile();
@@ -4385,13 +4383,14 @@
                     file.source.slice(block.start, block.end);
 
                 // hook, 每个分片发送之前可能要做些异步的事情。
-                promise = me.request( 'before-send', block, function() {
+                var igrowApi = ossFlag ? 'oss-before-send' : 'before-send';
+                promise = me.request(igrowApi, block, function () {
                     // 有可能文件已经上传出错了，所以不需要再传输了。
-                    if ( file.getStatus() === Status.PROGRESS ) {
-                        me._doSend( block);
+                    if (file.getStatus() === Status.PROGRESS) {
+                        me._doSend(block);
                     } else {
-                        me._popBlock( block );
-                        Base.nextTick( me.__tick );
+                        me._popBlock(block);
+                        Base.nextTick(me.__tick);
                     }
                 });
 
@@ -4464,7 +4463,7 @@
              */
 
             // 做上传操作。
-            _doSend: function (block,arr) {
+            _doSend: function (block, arr) {
                 var me = this,
                     owner = me.owner,
                     opts = me.options,
@@ -4546,7 +4545,8 @@
                     //    tr.destroy();
                     //}
                     // IGrow Extension
-                    Base.when(me.request('igrow-block-accept', block)).then(function () {
+                    var igrowApi = ossFlag ? 'oss-igrow-block-accept' : 'igrow-block-accept';
+                    Base.when(me.request(igrowApi, block)).then(function () {
                         // 全部上传完成。
                         if (file.remaning === 1) {
                             me._finishFile(file, ret);
@@ -4586,33 +4586,47 @@
 
             // 完成上传。
             _finishFile: function (file, ret, hds) {
-                var owner = this.owner,me = this,_args = arguments;
-                function getXml(arr,xml){
-                    arr.forEach((item)=>{
-                        var str = `<Part>
+                var owner = this.owner, me = this, _args = arguments, requestFn;
+                var igrowApi = ossFlag ? 'oss-after-send-file' : 'after-send-file';
+                if (ossFlag) {
+                    requestFn = function requestOss() {
+                        return owner.request('oss-init-merge', file, function () {
+                            owner.request('oss-complete-multi-upload', [xml, file], function () {
+                                owner.request(igrowApi, _args);
+                                file.setStatus(Status.COMPLETE);
+                                owner.trigger('uploadSuccess', file, ret, hds);
+                            })
+                        })
+                    }
+
+                    function getXml(arr, xml) {
+                        arr.forEach((item) => {
+                            var str = `<Part>
                     <PartNumber>${item.partNumber}</PartNumber>
-                    <ETag>${item.etag.replace(/\"/g,"")}</ETag>
+                    <ETag>${item.etag.replace(/\"/g, "")}</ETag>
                     </Part>`
-                        xml +=str;
-                    })
-                    xml = `<CompleteMultipartUpload>
+                            xml += str;
+                        })
+                        xml = `<CompleteMultipartUpload>
                     ${xml}
                  </CompleteMultipartUpload>`
-                    return xml;
-                }
-                file.etagArr = file.etagArr.sort(function (item1,item2) {
-                    return item1.partNumber - item2.partNumber
-                })
-                var xml = getXml(file.etagArr,'');
-                console.log(xml, 'xml')
+                        return xml;
+                    }
 
-                return  owner.request('init-merge',file,function () {
-                    owner.request('complete-multi-upload', [xml, file], function(){
-                        owner.request('after-send-file', _args);
-                        file.setStatus(Status.COMPLETE);
-                        owner.trigger('uploadSuccess', file, ret, hds);
+                    file.etagArr = file.etagArr.sort(function (item1, item2) {
+                        return item1.partNumber - item2.partNumber
                     })
-                }).fail(function (reason) {
+                    var xml = getXml(file.etagArr, '');
+                } else {
+                    requestFn = function () {
+                        return owner.request('after-send-file', _args, function () {
+                            file.setStatus(Status.COMPLETE);
+                            owner.trigger('uploadSuccess', file, ret, hds);
+                        })
+                    }
+                }
+
+                return requestFn().fail(function (reason) {
                     // 如果外部已经标记为invalid什么的，不再改状态。
                     if (file.getStatus() === Status.PROGRESS) {
                         file.setStatus(Status.ERROR, reason);
@@ -7299,7 +7313,7 @@
             send: function () {
                 var owner = this.owner,
                     opts = this.options,
-                    xhr = this._initAjax(owner._blob.file.etagArr),
+                    xhr = this._initAjax(ossFlag ? owner._blob.file.etagArr : null),
                     blob = owner._blob,
                     server = opts.server,
                     //formData, binary, fr;
@@ -7311,12 +7325,10 @@
                 server = blob.server || server;
 
                 if (opts.sendAsBinary) {
-                    // server += (/\?/.test(server) ? '&' : '?') +
-                    //     $.param(owner._formData);
 
                     binary = blob.getSource();
-                    // //server += (/\?/.test( server ) ? '&' : '?') +
-                    // //        $.param( owner._formData );
+                    // server += (/\?/.test( server ) ? '&' : '?') +
+                    //        $.param( owner._formData );
                     //
                     // //binary = blob.getSource();
                     //
@@ -7347,10 +7359,9 @@
                     xhr.open(opts.method, server, true);
                     xhr.withCredentials = true;
                 } else {
-                    xhr.open('PUT', server);
-                    // xhr.open(opts.method, server);
+                    xhr.open(opts.method, server);
                 }
-                $.extend(opts.headers,{
+                ossFlag && $.extend(opts.headers, {
                     'Authorization': blob.Authorization,
                     'x-oss-date': blob.Date,
                     // 'Content-Type': 'application/octet-stream',
@@ -7369,7 +7380,7 @@
                     // https://code.google.com/p/android/issues/detail?id=39882
                     // 所以先用fileReader读取出来再通过arraybuffer的方式发送。
 
-                    if (Base.os.android ) {
+                    if (Base.os.android) {
                         fr = new FileReader();
 
                         fr.onload = function () {
@@ -7455,8 +7466,6 @@
                 };
 
                 xhr.onreadystatechange = function () {
-                    console.log(xhr.status,'status');
-
                     if (xhr.readyState !== 4) {
                         return;
                     }
@@ -7465,16 +7474,17 @@
                     me._xhr = null;
                     me._status = xhr.status;
 
-                    if (xhr.status  >= 200 && xhr.status < 300) {
+                    if (xhr.status >= 200 && xhr.status < 300) {
                         me._response = xhr.responseText;
-                        etagArr.push({
-                            partNumber: me.owner._formData.chunk+1,
-                            etag: xhr.getResponseHeader('ETag')
-                        })
-                        console.log(etagArr,'testarr22');
+                        if (ossFlag) {
+                            etagArr.push({
+                                partNumber: me.owner._formData.chunk + 1,
+                                etag: xhr.getResponseHeader('ETag')
+                            })
+                        }
                         return me.trigger('load');
                         // } else if (xhr.status >= 500 && xhr.status < 600) {
-                         } else {
+                    } else {
                         me._response = xhr.responseText;
                         return me.trigger('error', 'server');
                     }
@@ -8149,21 +8159,204 @@
         'base',
         'uploader'
     ], function (Base, Uploader) {
-        var $ = Base.$, tasktoken, osstasktoken, AccessKeyId, Securitytoken;
-
+        var $ = Base.$, tasktoken;
         return Uploader.register({
             name: 'igrow',
-            'oss-check-token': 'checkOssToken',
+            'igrow-check-token': 'checkToken',
             'igrow-file-status': 'fileStatus',
-            'init-multi': 'initMulti',
             'before-send': 'beforeSend',
             'igrow-block-accept': 'blockAccept',
-            'after-send-file': 'afterSend',
-            'init-merge': 'initMerge',
-            'complete-multi-upload': 'completeMultipartUpload'
+            'after-send-file': 'afterSend'
         }, {
-            /* 获取初始化token
-            */
+            /*
+             * 获取上传token
+             */
+            checkToken: function () {
+                var deferred = Base.Deferred(), opts = this.options;
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/1.1b/file/upload/token/get',
+                    data: {configkey: opts.pick.configkey || 'default_asset'},
+                    success: function (result, status, xhr) {
+                        tasktoken = result.data.token;
+                        deferred.resolve();
+                    },
+                    error: function (result) {
+                        deferred.reject('ERROR_TOKEN_GET', JSON.parse(result.responseText))
+                    }
+                });
+                return deferred.promise();
+            },
+            /*
+             * 获取当前上传文件的状态
+             */
+            fileStatus: function (file) {
+                var me = this,
+                    deferred = Base.Deferred(),
+                    success = function (result) {
+                        if (result.data.url) {
+                            file.url = result.data.url;
+                            file.urlhash = result.data.urlhash;
+                            me.owner.skipFile(file);
+                            deferred.resolve(result.data);
+                        } else {
+                            me.options.chunkSize = result.data.chunk_size;
+                            deferred.resolve();
+                        }
+                    };
+                me.owner.md5File(file.source, 0, file.size).then(function (md5) {
+                    file.filehash = md5;
+                    $.ajax({
+                        type: 'GET',
+                        url: Base.os.android ? '/api/1.1b/file/upload/complicate/resumestatus/get' : '/api/1.1b/file/upload/unlocal/resumestatus/get',
+                        data: {
+                            tasktoken: tasktoken,
+                            filehash: file.filehash,
+                            filename: file.name,
+                            filesize: file.size,
+                            filetype: file.ext
+                        },
+                        success: success,
+                        error: function (result) {
+                            deferred.reject('ERROR_RESUMESTATUS_GET', JSON.parse(result.responseText))
+                        }
+                    });
+                }, function () {
+                    deferred.reject('ERROR_RESUMESTATUS_MD5FILE', '文件MD5计算失败')
+                });
+                return deferred.promise();
+            },
+            /*
+             * 分片上传前检查
+             */
+            beforeSend: function (block) {
+                var me = this,
+                    deferred = Base.Deferred(),
+                    success = function (result) {
+                        if (result.data.isfinish) {
+                            deferred.reject()
+                        } else {
+                            block.blob.formData = Base.os.android ? {
+                                tasktoken: tasktoken,
+                                filehash: block.file.filehash,
+                                filename: block.file.name,
+                                filesize: block.file.size,
+                                filetype: block.file.ext,
+                                chunk_id: block.chunk,
+                                chunk_size: result.data.chunk_size,
+                                chunk_hash: block.chunk_hash
+                            } : result.data.formdata;
+                            block.blob.server = result.data.upload_url || '/api/1.1b/file/upload/chunk/upload';
+                            deferred.resolve();
+                        }
+                    };
+                me.owner.md5File(block.file.source, block.start, block.end).then(function (md5) {
+                    block.chunk_hash = md5;
+                    $.ajax({
+                        type: 'GET',
+                        url: Base.os.android ? '/api/1.1b/file/upload/chunkstatus/get' : '/api/1.1b/file/upload/unlocal/chunkstatus/get',
+                        data: Base.os.android ? {
+                            filehash: block.file.filehash,
+                            chunk_id: block.chunk
+                        } : {
+                            tasktoken: tasktoken,
+                            filehash: block.file.filehash,
+                            block_id: block.chunk,
+                            block_hash: block.chunk_hash
+                        },
+                        success: success,
+                        error: function (result) {
+                            deferred.reject('ERROR_CHUNKSTATUS_GET', JSON.parse(result.responseText))
+                        }
+                    });
+                }, function () {
+                    deferred.reject('ERROR_CHUNKSTATUS_MD5FILE', '分片MD5计算失败')
+                });
+                return deferred.promise();
+            },
+            /*
+             * 分片上传完成后
+             */
+            blockAccept: function (block) {
+                if (!Base.os.android) {
+                    var deferred = Base.Deferred();
+                    $.ajax({
+                        type: 'POST',
+                        url: '/api/1.1b/file/upload/unlocal/chunkstatus/set',
+                        data: {
+                            tasktoken: tasktoken,
+                            filehash: block.file.filehash,
+                            block_id: block.chunk
+                        },
+                        success: deferred.resolve,
+                        error: function (result) {
+                            deferred.reject('ERROR_CHUNKSTATUS_SET', JSON.parse(result.responseText))
+                        }
+                    });
+                    return deferred.promise();
+                }
+            },
+            /*
+             * 当前文件上传完成
+             */
+            afterSend: function (file, ret, hds) {
+                if (Base.os.android) {
+                    try {
+                        file.url = ret.data.url;
+                        file.urlhash = ret.data.urlhash;
+                    } catch (ex) {
+                    }
+                } else if (!file.url) {
+                    var deferred = Base.Deferred();
+                    $.ajax({
+                        type: 'GET',
+                        url: '/api/1.1b/file/upload/unlocal/resumestatus/get',
+                        data: {
+                            tasktoken: tasktoken,
+                            filehash: file.filehash,
+                            filesize: file.size,
+                            filetype: file.ext
+                        },
+                        success: function (result) {
+                            if (result.data.url) {
+                                ret = $.extend(ret, result.data);
+                                file.url = ret.url;
+                                file.urlhash = ret.urlhash;
+                                deferred.resolve();
+                            } else deferred.resolve();
+                        },
+                        error: function (result) {
+                            deferred.reject('ERROR_AFTERSEND_RESUMESTATUS_GET', JSON.parse(result.responseText))
+                        }
+                    });
+                    return deferred.promise();
+                }
+            }
+        });
+    });
+    /**
+     * @fileOverview 阿里云上传——igrow组件相关。
+     */
+    define('widgets/ossigrow', [
+        'base',
+        'uploader'
+    ], function (Base, Uploader) {
+        var $ = Base.$, osstasktoken, AccessKeyId, Securitytoken;
+
+        return Uploader.register({
+            name: 'ossigrow',
+            'oss-igrow-check-token': 'checkOssToken',
+            'oss-igrow-file-status': 'fileStatus',
+            'oss-init-multi': 'initMulti',
+            'oss-before-send': 'beforeSend',
+            'oss-igrow-block-accept': 'blockAccept',
+            'oss-after-send-file': 'afterSend',
+            'oss-init-merge': 'initMerge',
+            'oss-complete-multi-upload': 'completeMultipartUpload'
+        }, {
+            /*
+             * 获取初始化token
+             */
             checkOssToken: function () {
                 var deferred = Base.Deferred();
                 var url = 'http://192.168.1.252:12834/1.1b/file/upload/token/get';
@@ -8208,7 +8401,7 @@
                             file.etagArr = [];
                             file.signature = result.data.Head_Signature;
                             file.ossDate = result.data.Date;
-                            me.request('init-multi',file).done(function(){
+                            me.request('oss-init-multi', file).done(function () {
                                 me.options.chunkSize = result.data.chunk_size;
                                 deferred.resolve();
                             })
@@ -8257,7 +8450,7 @@
                     var tag = xml.getElementsByTagName('UploadId');
                     var uploadId = tag && tag.length && tag[0].textContent;
                     file.uploadId = uploadId;
-                    console.log(uploadId,'init..my')
+                    console.log(uploadId, 'init..my')
                     deferred.resolve();
                 }, function (res) {
                     // alert('error')
@@ -8291,10 +8484,10 @@
                                 chunk_size: result.data.chunk_size,
                                 chunk_hash: block.chunk_hash
                             } : result.data.formdata;
-                            if(result.data.upload_url){
-                                var obj = {partNumber: block.chunk+1, uploadId: block.file.uploadId } //['id=1','src=2']
-                                var paramas = Object.keys(obj).map((item)=>{
-                                    return item+'='+obj[item]
+                            if (result.data.upload_url) {
+                                var obj = {partNumber: block.chunk + 1, uploadId: block.file.uploadId} //['id=1','src=2']
+                                var paramas = Object.keys(obj).map((item) => {
+                                    return item + '=' + obj[item]
                                 }).join('&')
                                 result.data.upload_url = 'http://' + result.data.upload_url + block.file.filehash + '.' + block.file.ext + '?' + paramas;
                             }
@@ -8367,7 +8560,7 @@
                     },
                     dataType: 'json',
                     success: function (result) {
-                        file.mergeData ={
+                        file.mergeData = {
                             auth: 'OSS ' + file.accessKeyId + ':' + result.data.formdata.Head_Signature,
                             Date: result.data.options.Date,
                             save_token: result.data.options.save_token,
@@ -8385,7 +8578,7 @@
              */
             completeMultipartUpload: function (xml, file) {
                 var aliServer = 'http://igr-assettest.oss-cn-hangzhou.aliyuncs.com';
-                var url = aliServer + '/' + file.filehash + '.' + file.ext + '?encoding-type=url&uploadId=' + file.uploadId ;
+                var url = aliServer + '/' + file.filehash + '.' + file.ext + '?encoding-type=url&uploadId=' + file.uploadId;
                 var deferred = Base.Deferred()
                 Base.ajax(url, {'encoding-type': '', postData: xml, method: 'POST'}, function (xhr) {
                     xhr.setRequestHeader("Authorization", file.mergeData.auth);
@@ -8453,6 +8646,7 @@
         'widgets/filepaste',
         'widgets/filepicker',
         'widgets/igrow',
+        'widgets/ossigrow',
         'widgets/image',
         'widgets/queue',
         'widgets/runtime',
