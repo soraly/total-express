@@ -3475,7 +3475,7 @@
              * })
              */
             removeFile: function (file, remove) {
-                debugger
+                debugger;
                 var me = this;
 
                 file = file.id ? file : me.queue.getFile(file);
@@ -4587,12 +4587,11 @@
             // 完成上传。
             _finishFile: function (file, ret, hds) {
                 var owner = this.owner, me = this, _args = arguments, requestFn;
-                var igrowApi = ossFlag ? 'oss-after-send-file' : 'after-send-file';
                 if (ossFlag) {
                     requestFn = function requestOss() {
                         return owner.request('oss-init-merge', file, function () {
                             owner.request('oss-complete-multi-upload', [xml, file], function () {
-                                owner.request(igrowApi, _args);
+                                owner.request('oss-after-send-file', _args);
                                 file.setStatus(Status.COMPLETE);
                                 owner.trigger('uploadSuccess', file, ret, hds);
                             })
@@ -8579,13 +8578,13 @@
             completeMultipartUpload: function (xml, file) {
                 var aliServer = 'http://igr-assettest.oss-cn-hangzhou.aliyuncs.com';
                 var url = aliServer + '/' + file.filehash + '.' + file.ext + '?encoding-type=url&uploadId=' + file.uploadId;
-                var deferred = Base.Deferred()
+                var deferred = Base.Deferred();
                 Base.ajax(url, {'encoding-type': '', postData: xml, method: 'POST'}, function (xhr) {
                     xhr.setRequestHeader("Authorization", file.mergeData.auth);
                     xhr.setRequestHeader("x-oss-date", file.mergeData.Date);
                     xhr.setRequestHeader("x-oss-security-token", file.mergeData.save_token);
                     xhr.setRequestHeader("Accept", 'application/json, text/javascript, */*; q=0.01');
-                    // xhr.setRequestHeader("Content-Type", 'text/xml; charset=UTF-8');
+                    //xhr.setRequestHeader("Content-Type", 'image/jpeg');
                     xhr.setRequestHeader("Content-Type", 'application/x-www-form-urlencoded; charset=UTF-8');
                 }, function (res) {
                     var xml = Base.loadXML(res);
@@ -8616,7 +8615,8 @@
                             tasktoken: osstasktoken,
                             filehash: file.filehash,
                             filesize: file.size,
-                            filetype: file.ext
+                            filetype: file.ext,
+                            merge: true
                         },
                         success: function (result) {
                             if (result.data.url) {

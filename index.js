@@ -13,6 +13,13 @@ const mysql = require('mysql')
 const urlLib = require('url')
 var server = express();
 var upload = multer({dest: './template/uploadedImg'})
+
+//测试NODE_ENV
+console.log(process.env.NODE_ENV,'process.env.NODE_ENV')
+if(process.env.NODE_ENV == 'develop'){
+    console.log('this is in develop')
+}
+
 //连接池
 var db = mysql.createPool({
     port: 3306,
