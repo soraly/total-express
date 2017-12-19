@@ -3475,7 +3475,7 @@
              * })
              */
             removeFile: function (file, remove) {
-                debugger;
+                //debugger;
                 var me = this;
 
                 file = file.id ? file : me.queue.getFile(file);
@@ -3804,8 +3804,9 @@
              * @namespace options
              * @for Uploader
              * @description 如果要分片，分多大一片？ 默认大小为5M.
+             * @IGrow Extension 分片默认100kb
              */
-            chunkSize: 5 * 1024 * 1024,
+            chunkSize: 100 * 1024,
 
             /**
              * @property {Boolean} [chunkRetry=2]
@@ -3895,7 +3896,6 @@
                 });
                 start += len;
             }
-
             file.blocks = pending.concat();
             file.remaning = pending.length;
 
@@ -4207,8 +4207,7 @@
                     me._promise = isPromise(val) ? val.always(fn) : fn(val);
 
                     // 没有要上传的了，且没有正在传输的了。
-                } else if (!me.remaning && !me._getStats().numOfQueue &&
-                    !me._getStats().numofInterrupt) {
+                } else if (!me.remaning && !me._getStats().numOfQueue && !me._getStats().numofInterrupt) {
                     me.runing = false;
 
                     me._trigged || Base.nextTick(function () {
@@ -4276,7 +4275,6 @@
                         if (!file) {
                             return null;
                         }
-
                         act = CuteFile(file, opts.chunked ? opts.chunkSize : 0);
                         me.stack.push(act);
                         return act.shift();
@@ -4397,6 +4395,7 @@
                 // 如果为fail了，则跳过此分片。
                 promise.fail(function () {
                     if (file.remaning === 1) {
+                    // if (false) {
                         me._finishFile(file).always(function () {
                             block.percentage = 1;
                             me._popBlock(block);
@@ -4589,33 +4588,45 @@
                 var owner = this.owner, me = this, _args = arguments, requestFn;
                 if (ossFlag) {
                     requestFn = function requestOss() {
-                        return owner.request('oss-init-merge', file, function () {
-                            owner.request('oss-complete-multi-upload', [xml, file], function () {
-                                owner.request('oss-after-send-file', _args);
+                        var deferred = Base.Deferred();
+                        if (file.etagArr && file.etagArr.length) {
+                            function getXml(arr, xml) {
+                                arr.forEach((item) => {
+                                    var str = `<Part>
+                                    <PartNumber>${item.partNumber}</PartNumber>
+                                    <ETag>${item.etag}</ETag>
+                                    </Part>`
+                                    xml += str;
+                                })
+                                xml = `<CompleteMultipartUpload>${xml}</CompleteMultipartUpload>`
+                                return xml;
+                            }
+
+                            file.etagArr = file.etagArr.sort(function (item1, item2) {
+                                return item1.partNumber - item2.partNumber
+                            })
+                            var xml = getXml(file.etagArr, '');
+                             //  >=2
+                            owner.request('oss-init-merge', file, function () {
+                                owner.request('oss-complete-multi-upload', [xml, file], function () {
+                                    owner.request('oss-after-send-file', _args, function () {
+                                        file.setStatus(Status.COMPLETE);
+                                        owner.trigger('uploadSuccess', file, ret, hds);
+                                        deferred.resolve();
+                                    });
+                                })
+                            })
+                        } else {
+                            owner.request('oss-after-send-file', _args, function () {
                                 file.setStatus(Status.COMPLETE);
                                 owner.trigger('uploadSuccess', file, ret, hds);
-                            })
-                        })
+                                deferred.resolve();
+                            });
+                        }
+                        return deferred.promise()
                     }
 
-                    function getXml(arr, xml) {
-                        arr.forEach((item) => {
-                            var str = `<Part>
-                    <PartNumber>${item.partNumber}</PartNumber>
-                    <ETag>${item.etag.replace(/\"/g, "")}</ETag>
-                    </Part>`
-                            xml += str;
-                        })
-                        xml = `<CompleteMultipartUpload>
-                    ${xml}
-                 </CompleteMultipartUpload>`
-                        return xml;
-                    }
 
-                    file.etagArr = file.etagArr.sort(function (item1, item2) {
-                        return item1.partNumber - item2.partNumber
-                    })
-                    var xml = getXml(file.etagArr, '');
                 } else {
                     requestFn = function () {
                         return owner.request('after-send-file', _args, function () {
@@ -7478,7 +7489,7 @@
                         if (ossFlag) {
                             etagArr.push({
                                 partNumber: me.owner._formData.chunk + 1,
-                                etag: xhr.getResponseHeader('ETag')
+                                etag: xhr.getResponseHeader('ETag').replace(/\"/g, "")
                             })
                         }
                         return me.trigger('load');
@@ -8127,7 +8138,6 @@
 
                     fr.onloadend = function () {
                         fr.onloadend = fr.onload = null;
-
                         if (++chunk < chunks) {
                             setTimeout(loadNext, 1);
                         } else {
@@ -8249,6 +8259,10 @@
                             deferred.resolve();
                         }
                     };
+                // if(block.chunk >=2){
+                //     a = b;
+                //     return;
+                // }
                 me.owner.md5File(block.file.source, block.start, block.end).then(function (md5) {
                     block.chunk_hash = md5;
                     $.ajax({
@@ -8386,8 +8400,7 @@
              * 获取当前上传文件的状态
              */
             fileStatus: function (file) {
-                var me = this,
-                    deferred = Base.Deferred(),
+                var me = this, deferred = Base.Deferred(),
                     success = function (result) {
                         if (result.data.url) {
                             file.url = result.data.url;
@@ -8395,19 +8408,38 @@
                             me.owner.skipFile(file);
                             deferred.resolve(result.data);
                         } else {
-                            AccessKeyId = file.accessKeyId = result.data.accesskeyid || AccessKeyId;
-                            Securitytoken = file.securitytoken = result.data.securitytoken || Securitytoken;
-                            file.etagArr = [];
-                            file.signature = result.data.Head_Signature;
-                            file.ossDate = result.data.Date;
-                            me.request('oss-init-multi', file).done(function () {
-                                me.options.chunkSize = result.data.chunk_size;
+                            if(result.data.uploadid){
+                                file.uploadId = result.data.uploadid;
+                                AccessKeyId = file.accessKeyId = result.data.accesskeyid || AccessKeyId;
+                                Securitytoken = file.securitytoken = result.data.securitytoken || Securitytoken;
+                                file.etagArr = [];
                                 deferred.resolve();
-                            })
+                            }else {
+                                AccessKeyId = file.accessKeyId = result.data.accesskeyid || AccessKeyId;
+                                Securitytoken = file.securitytoken = result.data.securitytoken || Securitytoken;
+                                file.etagArr = [];
+                                file.signature = result.data.Head_Signature;
+                                file.ossDate = result.data.Date;
+                                me.request('oss-init-multi', file).done(function () {
+                                    me.options.chunkSize = result.data.chunk_size;
+                                    deferred.resolve();
+                                })
+                            }
                         }
                     };
+
                 me.owner.md5File(file.source, 0, file.size).then(function (md5) {
                     file.filehash = md5;
+                    // Base.ajax('http://192.168.1.252:12834/1.1b/file/upload/oss/resumestatus/get', {
+                    //     tasktoken: osstasktoken,
+                    //     filehash: file.filehash,
+                    //     filename: file.name,
+                    //     filesize: file.size,
+                    //     filetype: file.ext
+                    // },null, success, function (result) {
+                    //     alert('error')
+                    //     deferred.reject('ERROR_RESUMESTATUS_GET', JSON.parse(result.responseText));
+                    // })
                     $.ajax({
                         type: 'GET',
                         dataType: 'JSON',
@@ -8422,6 +8454,7 @@
                         },
                         success: success,
                         error: function (result) {
+                            alert('error')
                             deferred.reject('ERROR_RESUMESTATUS_GET', JSON.parse(result.responseText));
                         }
                     });
@@ -8466,10 +8499,17 @@
                     success = function (result) {
 
                         if (result.data.isfinish) {
+                            console.log(block.file.etagArr,'arr')
+                            block.file.etagArr.push({
+                                partNumber: result.data.partNumber,
+                                etag: result.data.chunk_etag
+                            })
                             deferred.reject()
                         } else {
                             block.blob.file = block.file;
                             block.blob.Authorization = 'OSS ' + block.file.accessKeyId + ':' + result.data.formdata.Head_Signature;
+                            //console.log(block.file.chunkdata,'block.file.chunkdata',block.chunk)
+                            //block.blob.Authorization = 'OSS ' + block.file.accessKeyId + ':' + block.file.chunkdata[block.chunk];
                             block.blob.save_token = result.data.options.save_token;
                             block.blob.Date = result.data.options.Date;
                             block.blob.MD5 = result.data.options.MD5;
@@ -8484,7 +8524,7 @@
                                 chunk_hash: block.chunk_hash
                             } : result.data.formdata;
                             if (result.data.upload_url) {
-                                var obj = {partNumber: block.chunk + 1, uploadId: block.file.uploadId} //['id=1','src=2']
+                                var obj = {partNumber: block.chunk + 1, uploadId: block.file.uploadId} //['partNumber=1','uploadId=2']
                                 var paramas = Object.keys(obj).map((item) => {
                                     return item + '=' + obj[item]
                                 }).join('&')
@@ -8494,7 +8534,10 @@
                             deferred.resolve();
                         }
                     };
-
+                // if(block.chunk >=2){
+                //     a = b;
+                //     return;
+                // }
                 me.owner.md5File(block.file.source, block.start, block.end).then(function (md5) {
                     block.chunk_hash = md5;
                     $.ajax({
@@ -8526,13 +8569,19 @@
              */
             blockAccept: function (block) {
                 if (!Base.os.android) {
-                    var deferred = Base.Deferred();
+                    var deferred = Base.Deferred(),etagObj;
+                    if(block.file.etagArr.length){
+                        etagObj = block.file.etagArr.filter((item)=>{
+                            return item.partNumber == block.chunk + 1
+                        })
+                    }
                     $.ajax({
                         type: 'POST',
                         url: 'http://192.168.1.252:12834/1.1b/file/upload/oss/chunkstatus/set',
                         data: {
                             tasktoken: osstasktoken,
                             filehash: block.file.filehash,
+                            etag: etagObj[0].etag,
                             block_id: block.chunk + 1
                         },
                         success: deferred.resolve,
@@ -8610,13 +8659,14 @@
                     var deferred = Base.Deferred();
                     $.ajax({
                         type: 'GET',
+                        dataType: 'JSON',
                         url: 'http://192.168.1.252:12834/1.1b/file/upload/oss/resumestatus/get',
                         data: {
                             tasktoken: osstasktoken,
                             filehash: file.filehash,
                             filesize: file.size,
                             filetype: file.ext,
-                            merge: true
+                            ismerge: 1
                         },
                         success: function (result) {
                             if (result.data.url) {
