@@ -2899,8 +2899,8 @@
 
                 // IGrow Extension 加入bmp,gif,png图片压缩功能
                 var igrowApi = ossFlag ? 'oss-igrow-file-status' : 'igrow-file-status';
-                // if (!opts || !~'image/gif,image/png'.indexOf(file.type) ||
-                if (!opts || !~'image/jpeg,image/jpg,image/gif,image/bmp,image/png'.indexOf(file.type) ||
+                // if (!opts || !~'image/jpeg,image/jpg,image/gif,image/bmp,image/png'.indexOf(file.type) ||
+                if (!opts || !~'image/gif,image/png'.indexOf(file.type) ||
                     file.size < compressSize ||
                     file._compressed) {
                     // IGrow Extension
@@ -3975,7 +3975,7 @@
                 var me = this;
                 // 移出invalid的文件
                 $.each(me.request('get-files', Status.INVALID), function () {
-
+                    alert('remove')
                     me.request('remove-file', this);
                 });
 
@@ -4200,6 +4200,7 @@
 
                         // 有可能是reject过来的，所以要检测val的类型。
                         val && val.file && me._startSend(val);
+                        //alert('nexttick')
                         Base.nextTick(me.__tick);
                     };
 
@@ -8371,7 +8372,7 @@
              */
             checkOssToken: function () {
                 var deferred = Base.Deferred();
-                var url = 'http://m.igrow.cn/1.0/oss/gettoken';
+                var url = 'http://192.168.1.252:12834/1.1b/file/upload/token/get';
                 var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
                 var configkey = '';
                 for (var i = 0; i < 6; i++) {
@@ -8390,8 +8391,6 @@
                         deferred.resolve(result.data);
                     },
                     error: function (result) {
-                        osstasktoken = result.data.token;
-                        deferred.resolve(result.data);
                         deferred.reject('ERROR_TOKEN_GET', JSON.parse(result.responseText))
                     }
                 });
@@ -8436,8 +8435,7 @@
                         type: 'GET',
                         dataType: 'JSON',
                         //url: Base.os.android ? '/api/1.1b/file/upload/complicate/resumestatus/get' : 'http://m.igrow.cn/api/1.1b/file/upload/unlocal/resumestatus/get',
-                        // url: Base.os.android ? '/api/1.1b/file/upload/complicate/resumestatus/get' : 'http://m.igrow.cn/1.0/oss/getfile',
-                        url: 'http://m.igrow.cn/1.0/oss/getfile',
+                        url: Base.os.android ? '/api/1.1b/file/upload/complicate/resumestatus/get' : 'http://192.168.1.252:12834/1.1b/file/upload/oss/resumestatus/get',
                         data: {
                             tasktoken: osstasktoken,
                             filehash: file.filehash,
@@ -8448,6 +8446,7 @@
                         },
                         success: success,
                         error: function (result) {
+                            alert('error')
                             deferred.reject('ERROR_RESUMESTATUS_GET', JSON.parse(result.responseText));
                         }
                     });
@@ -8461,7 +8460,10 @@
              */
             initMulti: function (file) {
                 var aliServer = 'http://igr-assettest.oss-cn-hangzhou.aliyuncs.com';
-                var url = aliServer + '/' + file.objectname + '?uploads';
+                var url = aliServer + file.objectname + '?uploads';
+                if(location.search.substring(1)=='doubleLine'){
+                    url = aliServer + '/' + file.objectname + '?uploads';
+                }
                 var deferred = Base.Deferred();
                 Base.ajax(url, {'encoding-type': '', method: 'POST'}, function (xhr) {
                     var signature = 'OSS ' + file.accessKeyId + ':' + file.signature;
@@ -8531,9 +8533,11 @@
                     $.ajax({
                         type: 'GET',
                         dataType: 'json',
-                        // url: Base.os.android ? '/api/1.1b/file/upload/chunkstatus/get' : 'http://m.igrow.cn/1.0/oss/getchunk',
-                        url: 'http://m.igrow.cn/1.0/oss/getchunk',
-                        data:  {
+                        url: Base.os.android ? '/api/1.1b/file/upload/chunkstatus/get' : 'http://192.168.1.252:12834/1.1b/file/upload/oss/chunkstatus/get',
+                        data: Base.os.android ? {
+                            filehash: block.file.filehash,
+                            chunk_id: block.chunk
+                        } : {
                             tasktoken: osstasktoken,
                             filehash: block.file.filehash,
                             block_id: block.chunk + 1,
@@ -8554,36 +8558,36 @@
              * 分片上传完成后
              */
             blockAccept: function (block) {
-                // if (!Base.os.android) {
-                var deferred = Base.Deferred(), etagObj;
-                if (block.file.etagArr.length) {
-                    etagObj = block.file.etagArr.filter((item) => {
-                        return item.partNumber == block.chunk + 1
-                    })
-                }
-                $.ajax({
-                    type: 'POST',
-                    url: 'http://m.igrow.cn/1.0/oss/setchunk',
-                    data: {
-                        tasktoken: osstasktoken,
-                        filehash: block.file.filehash,
-                        etag: etagObj[0].etag,
-                        block_id: block.chunk + 1
-                    },
-                    success: deferred.resolve,
-                    error: function (result) {
-                        deferred.reject('ERROR_CHUNKSTATUS_SET', JSON.parse(result.responseText))
+                if (!Base.os.android) {
+                    var deferred = Base.Deferred(), etagObj;
+                    if (block.file.etagArr.length) {
+                        etagObj = block.file.etagArr.filter((item) => {
+                            return item.partNumber == block.chunk + 1
+                        })
                     }
-                });
-                return deferred.promise();
-
+                    $.ajax({
+                        type: 'POST',
+                        url: 'http://192.168.1.252:12834/1.1b/file/upload/oss/chunkstatus/set',
+                        data: {
+                            tasktoken: osstasktoken,
+                            filehash: block.file.filehash,
+                            etag: etagObj[0].etag,
+                            block_id: block.chunk + 1
+                        },
+                        success: deferred.resolve,
+                        error: function (result) {
+                            deferred.reject('ERROR_CHUNKSTATUS_SET', JSON.parse(result.responseText))
+                        }
+                    });
+                    return deferred.promise();
+                }
             },
             /*
              * 获取merge签名
              */
             initMerge: function (file) {
                 var deferred = Base.Deferred();
-                var url = 'http://m.igrow.cn/1.0/oss/getmerge';
+                var url = 'http://192.168.1.252:12834/1.1b/file/upload/oss/chunk/merge';
                 $.ajax({
                     type: 'GET',
                     url: url,
@@ -8635,7 +8639,7 @@
              * 当前文件上传完成
              */
             afterSend: function (file, ret, hds) {
-                if (false) {
+                if (Base.os.android) {
                     try {
                         file.url = ret.data.url;
                         file.urlhash = ret.data.urlhash;
@@ -8646,7 +8650,7 @@
                     $.ajax({
                         type: 'GET',
                         dataType: 'JSON',
-                        url: 'http://m.igrow.cn/1.0/oss/getfile',
+                        url: 'http://192.168.1.252:12834/1.1b/file/upload/oss/resumestatus/get',
                         data: {
                             tasktoken: osstasktoken,
                             filehash: file.filehash,

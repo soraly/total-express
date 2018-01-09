@@ -3427,6 +3427,7 @@
                 //}
                 // IGrow Extension
                 var igrowApi = ossFlag ? 'oss-igrow-check-token' : 'igrow-check-token';
+
                 files.length && me.request(igrowApi).done(function () {
                     files = $.map(files, function (file) {
                         return me._addFile(file);
@@ -8461,7 +8462,7 @@
              */
             initMulti: function (file) {
                 var aliServer = 'http://igr-assettest.oss-cn-hangzhou.aliyuncs.com';
-                var url = aliServer + '/' + file.objectname + '?uploads';
+                var url = aliServer + file.objectname + '?uploads';
                 var deferred = Base.Deferred();
                 Base.ajax(url, {'encoding-type': '', method: 'POST'}, function (xhr) {
                     var signature = 'OSS ' + file.accessKeyId + ':' + file.signature;
@@ -8520,7 +8521,7 @@
                                 var paramas = Object.keys(obj).map((item) => {
                                     return item + '=' + obj[item]
                                 }).join('&')
-                                result.data.upload_url = 'http://' + result.data.upload_url + block.file.filehash + '.' + block.file.ext + '?' + paramas;
+                                result.data.upload_url = 'http://' + result.data.upload_url + block.file.objectname + '?' + paramas;
                             }
                             block.blob.server = result.data.upload_url || '/api/1.1b/file/upload/chunk/upload';
                             deferred.resolve();
@@ -8613,7 +8614,7 @@
              */
             completeMultipartUpload: function (xml, file) {
                 var aliServer = 'http://igr-assettest.oss-cn-hangzhou.aliyuncs.com';
-                var url = aliServer + '/' + file.filehash + '.' + file.ext + '?encoding-type=url&uploadId=' + file.uploadId;
+                var url = aliServer + file.objectname + '?encoding-type=url&uploadId=' + file.uploadId;
                 var deferred = Base.Deferred();
                 Base.ajax(url, {'encoding-type': '', postData: xml, method: 'POST'}, function (xhr) {
                     xhr.setRequestHeader("Content-Type", file.type);
