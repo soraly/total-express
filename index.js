@@ -13,7 +13,7 @@ const mysql = require('mysql')
 const urlLib = require('url')
 var server = express();
 var upload = multer({dest: './template/uploadedImg'})
-
+console.log(12345)
 //测试NODE_ENV
 console.log(process.env.NODE_ENV,'process.env.NODE_ENV')
 if(process.env.NODE_ENV == 'develop'){
