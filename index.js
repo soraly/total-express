@@ -16,7 +16,7 @@ var upload = multer({dest: './template/uploadedImg'})
 console.log('new branch');
 console.log('changed on 0412 ')
 //测试NODE_ENV
-console.log(process.env.NODE_ENV,'process.env.NODE_ENV')
+console.log(process.env.NODE_ENV, 'process.env.NODE_ENV')
 if(process.env.NODE_ENV == 'develop'){
     console.log('this is in develop')
 }
@@ -107,7 +107,7 @@ function getBanner(res) {
         var sql = 'SELECT * FROM `banner_table`';
         db.query(sql, (err, data) => {
             if (err) {
-                res.status(400).send('服务器错误').end()
+                res.status(400).send(err).end()
                 reject()
             } else {
                 res.banners = data;
@@ -123,9 +123,10 @@ function getModules(res) {
         var sql2 = 'SELECT * FROM `module_table`'
         db.query(sql2, (err, data) => {
             if (err) {
-                res.status(400).send('database error').end()
+                res.status(400).send(err).end()
                 reject()
             } else {
+                console.log(data,'dataaaaaaaaaaaaaaaaaa')
                 res.modules = data;
                 resolve(data)
             }
