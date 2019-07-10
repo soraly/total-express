@@ -4,7 +4,6 @@ const cookieSession = require('cookie-session')
 const bodyParser = require('body-parser')
 //bodyparser只能解析post数据，不能解析post文件
 const ejs = require('ejs')
-const jade = require('jade')
 const multer = require('multer')
 const fs = require('fs')
 const path = require('path')
@@ -142,7 +141,6 @@ function getSummary(res) {
                 reject();
             } else {
                 res.contents = data;
-                console.log(data,'dataaaaaaaaaaaaaaaaaa')
                 resolve()
             }
         })
@@ -178,6 +176,8 @@ function addContent(data,res) {
 }
 
 server.all('/', (req, res, next) => {
+    res.cookie('666user', 'liuzhixiang');
+    console.log(req.cookies);
     Promise.all([getBanner(res), getModules(res), getSummary(res)]).then((result) => {
         res.render('index.ejs', {
             banners: res.banners,
