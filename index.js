@@ -126,7 +126,6 @@ function getModules(res) {
                 res.status(400).send(err).end()
                 reject()
             } else {
-                console.log(data,'dataaaaaaaaaaaaaaaaaa')
                 res.modules = data;
                 resolve(data)
             }
@@ -135,13 +134,15 @@ function getModules(res) {
 }
 
 function getSummary(res) {
-    var sql3 = 'SELECT id, auth_avatar, summary FROM `content_table`';
+    var sql3 = 'SELECT * FROM `content_table`';
     return new Promise((resolve, reject) => {
         db.query(sql3, (err, data) => {
             if (err) {
-
+                res.status(400).send(err).end();
+                reject();
             } else {
                 res.contents = data;
+                console.log(data,'dataaaaaaaaaaaaaaaaaa')
                 resolve()
             }
         })

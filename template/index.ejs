@@ -56,7 +56,7 @@
             <li></li>
         </ol>
     </div>
-    <div style="overflow: hidden" class="section">
+    <div style="overflow: hidden;background: #fff" class="section">
         <ul class="navicon clearfix">
             <% for(var i = 0;i < modules.length;i++){ %>
             <li class="nav-item">
@@ -79,20 +79,19 @@
                     <li>
                         <div class="icon"><img src="<%= contents[i].auth_avatar %>"></div>
                         <div class="text">
-                            <h2 class="name">{{item.title}}</h2>
-                            <span class="releaseName" v-show="!timeShow">
-                                <span v-show="!isWork">发布人: {{item.publishName && item.publishName.length > 4 ? (item.publishName.substring(0,4) + '...') : item.publishName}}</span>
-                                <span v-show="isWork">作者：{{item.author && item.author.length > 4 ? (item.author.substring(0,4) + '...') : item.author ||'匿名'}}</span></span>                         
-                            <span class="time" v-show="timeShow">{{item.createtime*1000 | formatDate}}</span>
+                            <h2 class="name"><%= contents[i].title %></h2>
+                            <span class="releaseName">
+                                <span>发布人: <%= contents[i].publishName && contents[i].publishName.length > 4 ? (contents[i].publishName.substring(0,4) + '...') : contents[i].publishName %></span>
+                            </span>
+                            <!-- <span class="time" v-show="timeShow"><%= contents[i].createtime %></span> -->
                             <p class="desc"><%= contents[i].summary %></p>
                         </div>
                     </li> 
                         <% } %>            
                 </ul> 
             </div>
-        <div v-show="module.classNews && !module.classNews.length" class="no-result">暂无动态</div>
+        <div style='display: none'  class="no-result">暂无动态</div>
     </div>
-    <div class="block" v-show="showAlbum"></div>
     <!-- <div class="list-wrap" v-show="showAlbum">
         <h1 class="list-title"><i></i>班级相册<router-link tag="span" class="more" :to="{path:'/classPhoto', query:{classid:currentClass.id}}">查看更多</router-link></h1>            
         <ul class="photoList clearfix">
@@ -106,23 +105,9 @@
         <div v-show="showAlbum && !module.classPhotos.length" class="no-result">暂无相册</div>
     </div>
     <div class="block" ></div> -->
-    <div class="newsList">
-        <ul>
-            <% for (var i = 0;i < contents.length;i++){ %>
-            <li>
-                <a href=<%='/content?id='+contents[i].id%>>
-                    <img src=<%= contents[i].auth_avatar %> alt="">
-                    <p><%= contents[i].summary %></p>
-                </a>
-                <div class="block"></div>
-            </li>
-            <% } %>
-        </ul>
-    </div>
 </div>
-<div class="foot-btn">
+<div class="foot-btn" style='display: none'>
     <ul>
-
         <a href="/add">发布</a>
     </ul>
 </div>
