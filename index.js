@@ -19,7 +19,8 @@ console.log(process.env.NODE_ENV, 'process.env.NODE_ENV')
 if(process.env.NODE_ENV == 'develop'){
     console.log('this is in develop')
 }
-
+const router2 = require('./router/index');
+console.log(router2,'router2')
 //连接池
 var db = mysql.createPool({
     port: 3306,
@@ -35,7 +36,9 @@ router.get('/login', (req, res) => {
 router.get('/register', (req, res) => {
     res.render('register.ejs')
 })
+console.log(router,'router')
 server.use('/user', router)
+server.use(router2);
 //设置签名，解析cookies
 server.use(cookieParser('abcd'))
 
@@ -110,7 +113,7 @@ function getBanner(res) {
                 reject()
             } else {
                 res.banners = data;
-                resolve(data)
+                resolve(data);
 
             }
         })
@@ -160,6 +163,7 @@ function getContent(id, res) {
     })
 }
 
+
 function addContent(data,res) {
     return new Promise((resolve, reject) => {
         var sql = `INSERT INTO content_table VALUES(null, '${data.auth}', '${data.auth_avatar}', '${data.title}', '${data.content}', '${data.summary}', '${data.n_praise}', '${data.post_time}' )`;
@@ -194,6 +198,7 @@ server.get('/content', (req, res) => {
         res.render('content.ejs', {content: data[0]})
     })
 })
+
 server.get('/add', (req, res) => {
     res.render('add.ejs', {})
 })

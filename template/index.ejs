@@ -111,6 +111,17 @@
         <a href="/add">发布</a>
     </ul>
 </div>
+<script>
+$.ajax({
+    url: '/profile/get',
+    data: {
+        id: 1
+    },
+    success: function(res){
+        console.log(res.data,'res')
+    }
+})
+</script>
 <style>
     .newsList li a {
         padding: 0.3rem;
