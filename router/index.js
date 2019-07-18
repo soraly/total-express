@@ -65,6 +65,22 @@ router.get('/profile/get',(req,res)=>{
     }
 })
 
+router.get('/api/1.1b/yo/qualitysy/tag/list',(req,res)=>{
+    var schoolid = req.query.schoolid;
+        var sql3 = 'SELECT * FROM `yo_qualitysy_tag` WHERE schoolid =' + schoolid;
+        db.query(sql3, (err, data) => {
+            if (err) {
+                res.status(500).send(err).end()
+            } else {
+                res.send({
+                    code: 0,
+                    data,
+                    extra: {}
+                });
+            }
+        })
+})
+
 function getProfile(id, res) {
     var sql3 = 'SELECT * FROM `yo_classprofiles` WHERE id =' + id;
     return new Promise((resolve, reject) => {
