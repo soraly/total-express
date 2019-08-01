@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    GET:
+    <form action="http://localhost:8899/uploadGet" method="get" >
+     <input type="text" placeholder="please enter name" name="name">   
+     <input type="text" placeholder="please enter age" name="age">   
+
+        <button>提交</button>
+    </form>
+    <hr style="margin: 20px 0;">
+    POST:
+    <form action="http://localhost:8899/uploadPost" method="post" enctype="multipart/form-data" >
+     <input type="text" placeholder="please enter name" name="name">   
+     <input type="text" placeholder="please enter age" name="age">    <br><br/>
+        <input type="file" name="lzxfile">
+        <button>提交</button>
+    </form>
+    
+</body>
+</html>
