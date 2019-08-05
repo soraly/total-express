@@ -27,6 +27,13 @@ const app = http.createServer((req, res) => {
         req.on('end', () => {
             console.log(postData, 'postData');
             res.writeHead(201, { 'content-type': 'text/plain' });
+            fs.writeFile('./uploadedFiles/1.txt', postData,(err,data)=>{
+                if(err){
+                    console.log(err)
+                }else {
+                    console.log(data,'write done')
+                }
+            });
             res.end(postData);
         })
     }
