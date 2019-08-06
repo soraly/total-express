@@ -1,27 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <script>
+        /** 针对上传的ajax组件 **/
+        function formAjax(url, params, callback, errorCallback) {
+            var xmlhttp = null;
+            params = params ? params : {};
+
+            if (window.XMLHttpRequest) {
+                xmlhttp = new XMLHttpRequest();
+            } else if (window.ActiveXObject) {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            if (xmlhttp != null) {
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState == 4) {
+                        if (xmlhttp.status == 200 || xmlhttp.status == 201) {
+                            if (typeof (callback) != 'undefined') {
+                                callback(xmlhttp.responseText);
+                            }
+                        } else {
+                            if (typeof (errorCallback) != 'undefined') {
+                                errorCallback(xmlhttp.responseText);
+                            }
+                        }
+                    }
+                };
+                //xmlhttp.overrideMimeType('application/octet-stream');
+                xmlhttp.open('POST', url, true);
+                xmlhttp.send(params);
+
+            } else {
+                console.log("Your browser does not support XMLHTTP.");
+            }
+        }
+        //初始化上传
+
+        // 获取文件二进制数据
+        function getFileBinary(file, cb) {
+            var reader = new FileReader();
+            reader.readAsArrayBuffer(file);
+            reader.onload = function (e) {
+                if (typeof cb === "function") {
+                    cb.call(this, this.result);
+                }
+            }
+        }
+
+        function submits(event) {
+            event.preventDefault();
+            var formData = new FormData();
+            formData.append("name", document.lzxform.name.value);
+            formData.append("age", document.lzxform.age.value);
+            formData.append("lzxfile", document.lzxform.lzxfile.files[0]);
+            var file = document.lzxform.lzxfile.files[0];
+            file = file.slice(0, 5);
+            getFileBinary(file, (binary) => {
+                console.log(binary, 'getFileBinary');
+                formAjax('http://localhost:8899/uploadPost', binary, res => {
+                    console.log(res, 'res');
+                })
+            })
+
+        }
+    </script>
 </head>
+
 <body>
     GET:
-    <form action="http://localhost:8899/uploadGet" method="get" >
-     <input type="text" placeholder="please enter name" name="name">   
-     <input type="text" placeholder="please enter age" name="age">   
+    <form action="http://localhost:8899/uploadGet" method="get">
+        <input type="text" placeholder="please enter name" name="name">
+        <input type="text" placeholder="please enter age" name="age">
 
         <button>提交</button>
     </form>
     <hr style="margin: 20px 0;">
     POST:
-    <form action="http://localhost:8899/uploadPost" method="post" enctype="multipart/form-data" >
-     <input type="text" placeholder="please enter name" name="name">   
-     <input type="text" placeholder="please enter age" name="age">    <br><br/>
-        <input type="file" name="lzxfile">
+    <form action="http://localhost:8899/uploadPost" method="post" name="lzxform" enctype="multipart/form-data">
+        <input type="text" placeholder="please enter name" name="name">
+        <input type="text" placeholder="please enter age" name="age"> <br><br />
+        <input type="file" name="lzxfile" id="upload">
         <button>提交</button>
+        <!-- <button onclick="submits(event)">提交</button> -->
     </form>
-    
+    <script src="./chunkUpload.js"></script>
 </body>
+
 </html>

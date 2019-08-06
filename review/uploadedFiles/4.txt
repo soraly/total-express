@@ -1,0 +1,15 @@
+------WebKitFormBoundaryufpbcLAcFq0Be9jz
+Content-Disposition: form-data; name="name"
+
+xiang
+------WebKitFormBoundaryufpbcLAcFq0Be9jz
+Content-Disposition: form-data; name="age"
+
+22
+------WebKitFormBoundaryufpbcLAcFq0Be9jz
+Content-Disposition: form-data; name="lzxfile"; filename="hello.txt"
+Content-Type: text/plain
+
+helloœË
+------WebKitFormBoundaryufpbcLAcFq0Be9jz--
+hello,xiang
